@@ -11,7 +11,6 @@ import com.mobile_prog.habit_quest.R;
 import java.util.Vector;
 
 import adapters.QuestAdapter;
-import adapters.QuestTypeAdapter;
 import models.Quest;
 import models.QuestType;
 import models.User;
@@ -29,6 +28,8 @@ public class QuestListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quest_list);
 
+        recyclerView = findViewById(R.id.recyclerview_quest);
+
         User dummyUser = new User(1, "vincent", "vincent@gmail.com","password", 2000, 2);
         QuestType dummyType = new QuestType(1, "Socialize Quest", "Socialize with your friends to gain more network", 30);
         UserQuestType dummyUserQuestType = new UserQuestType(1, dummyType, dummyUser, false);
@@ -40,6 +41,20 @@ public class QuestListActivity extends AppCompatActivity {
         userQuests.add(new UserQuest(1, dummyUserQuestType, quest1, false));
         userQuests.add(new UserQuest(1, dummyUserQuestType, quest2, true));
         userQuests.add(new UserQuest(1, dummyUserQuestType, quest3, false));
+        userQuests.add(new UserQuest(1, dummyUserQuestType, quest3, false));
+        userQuests.add(new UserQuest(1, dummyUserQuestType, quest3, false));
+        userQuests.add(new UserQuest(1, dummyUserQuestType, quest3, false));
+        userQuests.add(new UserQuest(1, dummyUserQuestType, quest3, false));
+        userQuests.add(new UserQuest(1, dummyUserQuestType, quest3, false));
+        userQuests.add(new UserQuest(1, dummyUserQuestType, quest3, false));
+        userQuests.add(new UserQuest(1, dummyUserQuestType, quest3, false));
+        userQuests.add(new UserQuest(1, dummyUserQuestType, quest3, false));
+        userQuests.add(new UserQuest(1, dummyUserQuestType, quest3, false));
+        userQuests.add(new UserQuest(1, dummyUserQuestType, quest3, false));
+        userQuests.add(new UserQuest(1, dummyUserQuestType, quest3, false));
+        userQuests.add(new UserQuest(1, dummyUserQuestType, quest3, false));
+        userQuests.add(new UserQuest(1, dummyUserQuestType, quest3, false));
+
 
         adapter = new QuestAdapter(this, userQuests);
         recyclerView.setAdapter(adapter);

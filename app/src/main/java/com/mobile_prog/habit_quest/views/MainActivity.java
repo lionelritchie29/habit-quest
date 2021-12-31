@@ -15,10 +15,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        Intent intent = new Intent(MainActivity.this, QuestTypeListActivity.class);
-//        startActivity(intent);
-        disableNightMode();
-        QuestsService.getInstance().getQuests();
+        Intent intent = new Intent(MainActivity.this, QuestTypeListActivity.class);
+        startActivity(intent);
+//        disableNightMode();
+//        QuestsService.getInstance().getQuests();
     }
 
     private void disableNightMode() {

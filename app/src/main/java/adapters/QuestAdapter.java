@@ -1,6 +1,7 @@
 package adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mobile_prog.habit_quest.R;
+import com.mobile_prog.habit_quest.views.QuestDetailActivity;
 
 import java.util.Vector;
 
@@ -46,7 +48,8 @@ public class QuestAdapter extends RecyclerView.Adapter<QuestAdapter.QuestViewHol
         holder.btnDoNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                intent ke detail quest
+                Intent intent = new Intent(context, QuestDetailActivity.class);
+                context.startActivity(intent);
             }
         });
     }

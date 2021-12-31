@@ -34,6 +34,7 @@
             android:layout_height="wrap_content"
             android:text="Abandon"
             android:drawableLeft="@drawable/ic_baseline_cancel_24"
+            android:backgroundTint="@color/red"
             />
     </LinearLayout>
 

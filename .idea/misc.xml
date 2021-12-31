@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/VINCENT/AndroidProject/habit-quest/app/src/main/res/layout/activity_login.xml" value="0.353713768115942" />
         <entry key="..\:/VINCENT/AndroidProject/habit-quest/app/src/main/res/layout/activity_main.xml" value="0.3523550724637681" />
+        <entry key="..\:/VINCENT/AndroidProject/habit-quest/app/src/main/res/layout/activity_quest_detail.xml" value="0.35260416666666666" />
         <entry key="..\:/VINCENT/AndroidProject/habit-quest/app/src/main/res/layout/activity_quest_list.xml" value="0.35733695652173914" />
         <entry key="..\:/VINCENT/AndroidProject/habit-quest/app/src/main/res/layout/activity_quest_type_list.xml" value="0.36096014492753625" />
         <entry key="..\:/VINCENT/AndroidProject/habit-quest/app/src/main/res/layout/quest_item.xml" value="0.35733695652173914" />
