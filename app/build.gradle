@@ -1,11 +1,23 @@
 plugins {
     id 'com.android.application'
+    id 'com.huawei.agconnect'
 }
 
 apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdk 30
+
+    signingConfigs {
+        release {
+            storeFile file('HMSKey.jks')
+            keyAlias 'HMS'
+            keyPassword 'habitquest'
+            storePassword 'habitquest'
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
 
     defaultConfig {
         applicationId "com.mobile_prog.habit_quest"
@@ -19,8 +31,13 @@ android {
 
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            signingConfig signingConfigs.release
+            debuggable true
         }
     }
     compileOptions {
@@ -40,4 +57,5 @@ dependencies {
 
     implementation platform('com.google.firebase:firebase-bom:29.0.3')
     implementation 'com.google.firebase:firebase-firestore'
+    implementation 'com.huawei.hms:hwid:6.3.0.300'
 }
