@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Habit Quest</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ultricies consequat lorem nec mattis. Sed.</string>
 </resources>

@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HabitQuest">
         <activity
+            android:name=".QuestListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".QuestTypeListActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
