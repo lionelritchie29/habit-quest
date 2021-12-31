@@ -14,15 +14,15 @@ import com.mobile_prog.habit_quest.R;
 
 import java.util.Vector;
 
-import models.Quest;
+import models.UserQuest;
 
 public class QuestAdapter extends RecyclerView.Adapter<QuestAdapter.QuestViewHolder> {
 
     LayoutInflater mInflater;
-    Vector<Quest> quests;
+    Vector<UserQuest> quests;
     Context context;
 
-    public QuestAdapter(Context context, Vector<Quest> quests){
+    public QuestAdapter(Context context, Vector<UserQuest> quests){
         mInflater = LayoutInflater.from(context);
         this.quests = quests;
         this.context = context;
@@ -38,9 +38,9 @@ public class QuestAdapter extends RecyclerView.Adapter<QuestAdapter.QuestViewHol
     @Override
     public void onBindViewHolder(@NonNull QuestViewHolder holder, int position) {
 
-        Quest currentQuest = quests.get(position);
-        holder.questName.setText(currentQuest.name);
-        holder.questIsDone.setText("Not Done");
+        UserQuest currentQuest = quests.get(position);
+        holder.questName.setText(currentQuest.quest.name);
+        holder.questIsDone.setText(currentQuest.isDone ? "Done" : "Not Done");
         holder.btnDoNow.setTag(position);
 
         holder.btnDoNow.setOnClickListener(new View.OnClickListener() {

@@ -1,20 +1,15 @@
 package models;
 
-import java.util.Date;
-
 public class UserQuestType {
-
     public int id;
-    public int questTypeId;
-    public int userId;
-    public Date startDate;
+    public QuestType type;
+    public User user;
     public boolean isDone;
 
-    public UserQuestType(int id, int questTypeId, int userId,Date startDate, boolean isDone) {
+    public UserQuestType(int id, QuestType type, User user, boolean isDone) {
         this.id = id;
-        this.questTypeId = questTypeId;
-        this.userId = userId;
-        this.startDate = startDate;
+        this.type = type;
+        this.user = user;
         this.isDone = isDone;
     }
 }

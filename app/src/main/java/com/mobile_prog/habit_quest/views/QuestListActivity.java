@@ -13,10 +13,14 @@ import java.util.Vector;
 import adapters.QuestAdapter;
 import adapters.QuestTypeAdapter;
 import models.Quest;
+import models.QuestType;
+import models.User;
+import models.UserQuest;
+import models.UserQuestType;
 
 public class QuestListActivity extends AppCompatActivity {
 
-    Vector<Quest> quests;
+    Vector<UserQuest> userQuests;
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
 
@@ -25,15 +29,19 @@ public class QuestListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quest_list);
 
-        quests = new Vector<>();
-        quests.add(new Quest(1, 1, "Ask 1 Friend to Hangout", "Ask your friends to hangout with you, minimal 1, greater will be better","Ask with your manner"));
-        quests.add(new Quest(2, 1, "Chat 5 Friends", "Ask your friends to hangout with you, minimal 1, greater will be better","Ask with your manner"));
-        quests.add(new Quest(3, 1, "Talk with your Family", "Ask your friends to hangout with you, minimal 1, greater will be better","Ask with your manner"));
-        quests.add(new Quest(4, 1, "Post 1 Feed on instagram", "Ask your friends to hangout with you, minimal 1, greater will be better","Ask with your manner"));
+        User dummyUser = new User(1, "vincent", "vincent@gmail.com","password", 2000, 2);
+        QuestType dummyType = new QuestType(1, "Socialize Quest", "Socialize with your friends to gain more network", 30);
+        UserQuestType dummyUserQuestType = new UserQuestType(1, dummyType, dummyUser, false);
+        Quest quest1 = new Quest(1, dummyType, "Ask 1 Friend to Hangout", "Ask your friends to hangout with you, minimal 1, greater will be better","Ask with your manner");
+        Quest quest2 = new Quest(2, dummyType, "Talk with your Family", "Ask your friends to hangout with you, minimal 1, greater will be better","Ask with your manner");
+        Quest quest3 = new Quest(3, dummyType, "Chat 5 Friends", "Ask your friends to hangout with you, minimal 1, greater will be better","Ask with your manner");
 
-        recyclerView = findViewById(R.id.recyclerview_quest);
+        userQuests = new Vector<>();
+        userQuests.add(new UserQuest(1, dummyUserQuestType, quest1, false));
+        userQuests.add(new UserQuest(1, dummyUserQuestType, quest2, true));
+        userQuests.add(new UserQuest(1, dummyUserQuestType, quest3, false));
 
-        adapter = new QuestAdapter(this, quests);
+        adapter = new QuestAdapter(this, userQuests);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
