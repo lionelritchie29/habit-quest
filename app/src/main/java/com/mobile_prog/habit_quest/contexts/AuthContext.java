@@ -30,6 +30,11 @@ public class AuthContext {
         return current.getEmail();
     }
 
+    public static String getId() {
+        if (current == null) return "";
+        return current.getUnionId();
+    }
+
     public static void set(AuthAccount account) {
         current = account;
     }
