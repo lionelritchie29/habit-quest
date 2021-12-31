@@ -12,10 +12,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HabitQuest">
+
         <meta-data
             android:name="com.huawei.hms.client.channel.androidMarket"
             android:value="false" />
-
+        <activity
+            android:name=".QuestListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".QuestTypeListActivity"
+            android:exported="false" />
         <activity
             android:name=".views.LoginActivity"
             android:exported="true">
