@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.mobile_prog.habit_quest.QuestListActivity;
+import com.mobile_prog.habit_quest.views.QuestListActivity;
 import com.mobile_prog.habit_quest.R;
 
 import java.util.Vector;

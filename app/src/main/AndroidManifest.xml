@@ -17,10 +17,13 @@
             android:name="com.huawei.hms.client.channel.androidMarket"
             android:value="false" />
         <activity
-            android:name=".QuestListActivity"
+            android:name=".views.QuestListActivity"
             android:exported="false" />
         <activity
-            android:name=".QuestTypeListActivity"
+            android:name=".views.QuestTypeListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.MainActivity"
             android:exported="false" />
         <activity
             android:name=".views.LoginActivity"

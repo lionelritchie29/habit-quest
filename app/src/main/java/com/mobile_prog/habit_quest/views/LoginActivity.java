@@ -22,6 +22,7 @@ import com.huawei.hms.support.account.result.AuthAccount;
 import com.huawei.hms.support.account.service.AccountAuthService;
 import com.huawei.hms.support.hwid.ui.HuaweiIdAuthButton;
 import com.mobile_prog.habit_quest.R;
+import com.mobile_prog.habit_quest.contexts.AuthContext;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -49,7 +50,8 @@ public class LoginActivity extends AppCompatActivity {
     private void initializeHuaweiSingleSignOn() {
         huaweiSignInBtn = findViewById(R.id.huawei_sign_in_btn);
         huaweiSignInBtn.setOnClickListener(v -> {
-            Log.i(TAG, "Logging in");
+            huaweiSignInBtn.setEnabled(false);
+            Toast.makeText(this, "Processing your request, please wait...", Toast.LENGTH_SHORT).show();
             silentSignInByHwId();
         });
     }
@@ -66,6 +68,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         task.addOnFailureListener(e -> {
+            huaweiSignInBtn.setEnabled(true);
            if (e instanceof ApiException) {
                ApiException apiException = (ApiException) e;
                Intent signInIntent = mAuthService.getSignInIntent();
@@ -90,12 +93,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void onSignInSuccess(AuthAccount account) {
-        Log.i(TAG, "display name:" + account.getDisplayName());
-        Log.i(TAG, "photo uri string:" + account.getAvatarUriString());
-        Log.i(TAG, "photo uri:" + account.getAvatarUri());
-        Log.i(TAG, "email:" + account.getEmail());
-        Log.i(TAG, "openid:" + account.getOpenId());
-        Log.i(TAG, "unionid:" + account.getUnionId());
-        Toast.makeText(this, "Welcome, " + account.getDisplayName(), Toast.LENGTH_SHORT).show();
+        AuthContext.set(account);
+
+        Toast.makeText(this, "Welcome, " + AuthContext.getName(), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

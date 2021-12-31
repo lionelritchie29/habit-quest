@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".QuestTypeListActivity">
+    tools:context=".views.QuestTypeListActivity">
 
     <LinearLayout
         android:id="@+id/linear_questlist_header"
