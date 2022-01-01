@@ -66,6 +66,72 @@ public class QuestTypesService extends BaseService{
         });
     };
 
+    public void getCurrentByUser(String userId, Callable<Vector<QuestType>> callback) {
+        UserQuestTypesService.getInstance().getByUser(userId, userQuestTypes -> {
+            Vector<QuestType> questTypes = new Vector<>();
+            final Vector<Integer> counters = new Vector<>();
+            counters.add(0);
+
+            if (userQuestTypes.size() == 0) {
+                callback.call(questTypes);
+            }
+
+            for (UserQuestType uqt: userQuestTypes) {
+                if (!uqt.isDone()) {
+                    db.collection(COLLECTION_NAME).whereEqualTo("__name__", uqt.getQuestTypeId()).get().addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                QuestType qt = document.toObject(QuestType.class);
+                                qt.setId(document.getId());
+                                questTypes.add(qt);
+                            }
+                        } else {
+                            Log.d(TAG, "Failed when getting quest type documents");
+                        }
+
+                        counters.set(0, counters.get(0) + 1);
+                        if (counters.get(0) == userQuestTypes.size()) {
+                            callback.call(questTypes);
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    public void getHistoryByUser(String userId, Callable<Vector<QuestType>> callback) {
+        UserQuestTypesService.getInstance().getByUser(userId, userQuestTypes -> {
+            Vector<QuestType> questTypes = new Vector<>();
+            final Vector<Integer> counters = new Vector<>();
+            counters.add(0);
+
+            if (userQuestTypes.size() == 0) {
+                callback.call(questTypes);
+            }
+
+            for (UserQuestType uqt: userQuestTypes) {
+                if (uqt.isDone()) {
+                    db.collection(COLLECTION_NAME).whereEqualTo("__name__", uqt.getQuestTypeId()).get().addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                QuestType qt = document.toObject(QuestType.class);
+                                qt.setId(document.getId());
+                                questTypes.add(qt);
+                            }
+                        } else {
+                            Log.d(TAG, "Failed when getting quest type documents");
+                        }
+
+                        counters.set(0, counters.get(0) + 1);
+                        if (counters.get(0) == userQuestTypes.size()) {
+                            callback.call(questTypes);
+                        }
+                    });
+                }
+            }
+        });
+    }
+
     public void getByUser(String userId, Callable<Vector<QuestType>> callback) {
         UserQuestTypesService.getInstance().getByUser(userId, userQuestTypes -> {
             Vector<QuestType> questTypes = new Vector<>();
