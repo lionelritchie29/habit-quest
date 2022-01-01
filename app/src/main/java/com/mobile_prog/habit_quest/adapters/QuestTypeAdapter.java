@@ -1,4 +1,4 @@
-package adapters;
+package com.mobile_prog.habit_quest.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +16,7 @@ import com.mobile_prog.habit_quest.R;
 
 import java.util.Vector;
 
-import models.QuestType;
+import com.mobile_prog.habit_quest.models.QuestType;
 
 public class QuestTypeAdapter extends RecyclerView.Adapter<QuestTypeAdapter.QuestTypeViewHolder> {
 

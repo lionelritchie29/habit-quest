@@ -1,4 +1,4 @@
-package models;
+package com.mobile_prog.habit_quest.models;
 
 public class QuestType {
 

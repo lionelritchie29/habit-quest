@@ -10,12 +10,12 @@ import com.mobile_prog.habit_quest.R;
 
 import java.util.Vector;
 
-import adapters.QuestAdapter;
-import models.Quest;
-import models.QuestType;
-import models.User;
-import models.UserQuest;
-import models.UserQuestType;
+import com.mobile_prog.habit_quest.adapters.QuestAdapter;
+import com.mobile_prog.habit_quest.models.Quest;
+import com.mobile_prog.habit_quest.models.QuestType;
+import com.mobile_prog.habit_quest.models.User;
+import com.mobile_prog.habit_quest.models.UserQuest;
+import com.mobile_prog.habit_quest.models.UserQuestType;
 
 public class QuestListActivity extends AppCompatActivity {
 
