@@ -13,15 +13,16 @@ import com.mobile_prog.habit_quest.R;
 import java.util.Vector;
 
 import com.mobile_prog.habit_quest.adapters.QuestAdapter;
+import com.mobile_prog.habit_quest.contexts.AuthContext;
 import com.mobile_prog.habit_quest.models.Quest;
 import com.mobile_prog.habit_quest.models.QuestType;
 import com.mobile_prog.habit_quest.models.User;
 import com.mobile_prog.habit_quest.models.UserQuest;
 import com.mobile_prog.habit_quest.models.UserQuestType;
+import com.mobile_prog.habit_quest.services.UserQuestsService;
 
 public class QuestListActivity extends AppCompatActivity {
 
-    Vector<UserQuest> userQuests;
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
 
@@ -34,10 +35,13 @@ public class QuestListActivity extends AppCompatActivity {
         String questTypeId = extras.getString("quest_type_id");
 
         recyclerView = findViewById(R.id.recyclerview_quest);
-        userQuests = new Vector<UserQuest>();
-        adapter = new QuestAdapter(this, userQuests);
-        recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        Log.d("TEST", questTypeId);
+        UserQuestsService.getInstance().getByUserAndQuestType(AuthContext.getId(), questTypeId, userQuests -> {
+            Log.d("TEST", String.valueOf(userQuests.size()));
+            adapter = new QuestAdapter(this, userQuests);
+            recyclerView.setAdapter(adapter);
+        });
     }
 }

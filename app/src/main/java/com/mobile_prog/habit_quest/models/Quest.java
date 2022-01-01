@@ -1,6 +1,8 @@
 package com.mobile_prog.habit_quest.models;
 
-public class Quest {
+import java.io.Serializable;
+
+public class Quest implements Serializable {
     private String id;
     private QuestType type;
     private String questTypeId;

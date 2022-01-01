@@ -90,7 +90,7 @@ public class Seeder {
                         Map<String, Object> socializeQuest = new HashMap<>();
                         socializeQuest.put("type_id", qt.getId());
                         socializeQuest.put("name", q.getName());
-                        socializeQuest.put("description", qt.getDescription());
+                        socializeQuest.put("description", q.getDescription());
                         socializeQuest.put("tips", q.getTips());
                         DocumentReference docRef = db.collection("quests").document();
                         batch.set(docRef, socializeQuest);
@@ -100,7 +100,7 @@ public class Seeder {
                         Map<String, Object> socializeQuest = new HashMap<>();
                         socializeQuest.put("type_id", qt.getId());
                         socializeQuest.put("name", q.getName());
-                        socializeQuest.put("description", qt.getDescription());
+                        socializeQuest.put("description", q.getDescription());
                         socializeQuest.put("tips", q.getTips());
                         DocumentReference docRef = db.collection("quests").document();
                         batch.set(docRef, socializeQuest);
@@ -110,7 +110,7 @@ public class Seeder {
                         Map<String, Object> socializeQuest = new HashMap<>();
                         socializeQuest.put("type_id", qt.getId());
                         socializeQuest.put("name", q.getName());
-                        socializeQuest.put("description", qt.getDescription());
+                        socializeQuest.put("description", q.getDescription());
                         socializeQuest.put("tips", q.getTips());
                         DocumentReference docRef = db.collection("quests").document();
                         batch.set(docRef, socializeQuest);
@@ -130,7 +130,11 @@ public class Seeder {
                     for (Quest q: quests) {
                         if (q.getQuestTypeId().equals(uqt.getQuestTypeId())) {
                             DocumentReference docRef = db.collection("user_quests").document();
-                            UserQuest uq = new UserQuest("-1", uqt.getId(), q.getId(), false);
+                            Map<String, Object> uq = new HashMap<>();
+                            uq.put("id", "-1");
+                            uq.put("quest_id", q.getId());
+                            uq.put("user_quest_type_id", uqt.getId());
+                            uq.put("is_done", false);
                             batch.set(docRef, uq);
                         }
                     }

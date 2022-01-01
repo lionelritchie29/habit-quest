@@ -30,7 +30,7 @@
             android:layout_weight="10"/>
 
         <TextView
-            android:id="@+id/txt_quest_type_desc"
+            android:id="@+id/txt_detail_quest_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="12sp"

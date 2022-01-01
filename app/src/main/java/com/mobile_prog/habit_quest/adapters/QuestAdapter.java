@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mobile_prog.habit_quest.R;
+import com.mobile_prog.habit_quest.models.Quest;
 import com.mobile_prog.habit_quest.services.QuestsService;
 import com.mobile_prog.habit_quest.views.QuestDetailActivity;
 
@@ -48,12 +49,14 @@ public class QuestAdapter extends RecyclerView.Adapter<QuestAdapter.QuestViewHol
 
         QuestsService.getInstance().getById(currentQuest.getQuestId(), quest -> {
             holder.questName.setText(quest.getName());
+            holder.setQuest(quest);
         });
 
         holder.btnDoNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, QuestDetailActivity.class);
+                intent.putExtra("quest", holder.quest);
                 context.startActivity(intent);
             }
         });
@@ -69,6 +72,7 @@ public class QuestAdapter extends RecyclerView.Adapter<QuestAdapter.QuestViewHol
         TextView questName, questIsDone;
         Button btnDoNow;
         RecyclerView.Adapter adapter;
+        private Quest quest;
 
         public QuestViewHolder(@NonNull View itemView, QuestAdapter adapter) {
             super(itemView);
@@ -78,6 +82,10 @@ public class QuestAdapter extends RecyclerView.Adapter<QuestAdapter.QuestViewHol
             btnDoNow = itemView.findViewById(R.id.btn_do_now);
 
             this.adapter = adapter;
+        }
+
+        public void setQuest(Quest quest) {
+            this.quest = quest;
         }
     }
 }

@@ -14,6 +14,8 @@ import com.google.firebase.firestore.WriteBatch;
 import com.mobile_prog.habit_quest.interfaces.Callable;
 import com.mobile_prog.habit_quest.models.Quest;
 import com.mobile_prog.habit_quest.models.QuestType;
+import com.mobile_prog.habit_quest.models.UserQuest;
+import com.mobile_prog.habit_quest.models.UserQuestType;
 
 import java.util.HashMap;
 import java.util.Map;
