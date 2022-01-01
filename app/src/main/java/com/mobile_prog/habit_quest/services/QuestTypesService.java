@@ -40,6 +40,30 @@ public class QuestTypesService extends BaseService{
         });
     }
 
+    public void getNotEnrolledByUser(String userId, Callable<Vector<QuestType>> callback) {
+        UserQuestTypesService.getInstance().getByUser(userId, userQuestTypes -> {
+            Vector<String> questIds = new Vector<>();
+            for (UserQuestType uqt: userQuestTypes) {
+                questIds.add(uqt.getQuestTypeId());
+            }
+
+            db.collection(COLLECTION_NAME).whereNotIn("__name__", questIds).get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    Vector<QuestType> qts = new Vector<>();
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        QuestType qt = document.toObject(QuestType.class);
+                        qt.setId(document.getId());
+                        qts.add(qt);
+                    }
+
+                    callback.call(qts);
+                } else {
+                    Log.d(TAG, "Failed when getting quest type documents");
+                }
+            });
+        });
+    };
+
     public void getByUser(String userId, Callable<Vector<QuestType>> callback) {
         UserQuestTypesService.getInstance().getByUser(userId, userQuestTypes -> {
             Vector<String> questIds = new Vector<>();
