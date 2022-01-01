@@ -77,4 +77,24 @@ public class QuestsService extends BaseService{
             }
         });
     }
+
+    public void getByQuestTypeId(String questTypeId, Callable<Vector<Quest>> callback) {
+        db.collection(COLLECTION_NAME).whereEqualTo("type_id", questTypeId).get().addOnCompleteListener(task -> {
+           Vector<Quest> quests = new Vector<>();
+            if (task.isSuccessful()) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    quests.add(new Quest(
+                            document.getId(),
+                            document.getString("type_id"),
+                            document.getString("name"),
+                            document.getString("description"),
+                            document.getString("tips")
+                    ));
+                }
+           } else {
+                Log.w(this.getClass().getName(), "Error getting documents.", task.getException());
+           }
+            callback.call(quests);
+        });
+    }
 }

@@ -2,12 +2,19 @@ package com.mobile_prog.habit_quest.services;
 
 import android.util.Log;
 
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.WriteBatch;
 import com.mobile_prog.habit_quest.interfaces.Callable;
 import com.mobile_prog.habit_quest.models.Quest;
 import com.mobile_prog.habit_quest.models.UserQuest;
+import com.mobile_prog.habit_quest.models.UserQuestType;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
+
+import javax.security.auth.callback.Callback;
 
 public class UserQuestsService extends BaseService{
     private static UserQuestsService instance = null;
@@ -42,6 +49,32 @@ public class UserQuestsService extends BaseService{
                 } else {
                     Log.w(this.getClass().getName(), "Error getting user quests documents.", task.getException());
                     callback.call(userQuests);
+                }
+            });
+        });
+    }
+
+    public void addForUserQuestType(String userQuestTypeId, String questTypeId, Callable<Void> callback) {
+        QuestsService.getInstance().getByQuestTypeId(questTypeId, quests -> {
+            WriteBatch batch = db.batch();
+
+            for (Quest quest: quests) {
+                Map<String, Object> userQuest = new HashMap<>();
+                userQuest.put("id", "-1");
+                userQuest.put("is_done", false);
+                userQuest.put("quest_id", quest.getId());
+                userQuest.put("user_quest_type_id", userQuestTypeId);
+
+                DocumentReference docRef = db.collection(COLLECTION_NAME).document();
+                batch.set(docRef, userQuest);
+            }
+
+            batch.commit().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    callback.call(null);
+                } else {
+                    Log.w(TAG, "error when adding user quests");
+                    callback.call(null);
                 }
             });
         });

@@ -14,8 +14,12 @@ import com.bumptech.glide.Glide;
 import com.mobile_prog.habit_quest.R;
 import com.mobile_prog.habit_quest.adapters.QuestTypeAdapter;
 import com.mobile_prog.habit_quest.contexts.AuthContext;
+import com.mobile_prog.habit_quest.models.Quest;
+import com.mobile_prog.habit_quest.models.QuestType;
 import com.mobile_prog.habit_quest.services.QuestTypesService;
 import com.mobile_prog.habit_quest.utils.Seeder;
+
+import java.util.Vector;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 

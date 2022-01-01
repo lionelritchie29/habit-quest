@@ -29,10 +29,10 @@ public class QuestTypeListActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerview_quest_type);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        QuestTypesService.getInstance().getNotEnrolledByUser(AuthContext.getId(), questTypes -> {
+        QuestTypesService.getInstance().getAll(questTypes -> {
             this.questTypes = questTypes;
 
-            adapter = new QuestTypeAdapter(this, questTypes);
+            adapter = new QuestTypeAdapter(this, questTypes, true);
             recyclerView.setAdapter(adapter);
         });
     }
