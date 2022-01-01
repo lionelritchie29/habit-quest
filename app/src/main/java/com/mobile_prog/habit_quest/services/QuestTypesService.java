@@ -44,7 +44,7 @@ public class QuestTypesService extends BaseService{
         UserQuestTypesService.getInstance().getByUser(userId, userQuestTypes -> {
             Vector<String> questIds = new Vector<>();
             for (UserQuestType uqt: userQuestTypes) {
-                questIds.add(uqt.getTypeId());
+                questIds.add(uqt.getQuestTypeId());
             }
 
             db.collection(COLLECTION_NAME).whereIn("__name__", questIds).get().addOnCompleteListener(task -> {

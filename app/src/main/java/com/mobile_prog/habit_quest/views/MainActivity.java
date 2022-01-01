@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.mobile_prog.habit_quest.R;
 import com.mobile_prog.habit_quest.contexts.AuthContext;
+import com.mobile_prog.habit_quest.utils.Seeder;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 

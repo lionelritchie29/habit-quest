@@ -2,15 +2,47 @@ package com.mobile_prog.habit_quest.models;
 
 public class UserQuest {
 
-    public int id;
-    public UserQuestType userQuestType;
-    public Quest quest;
-    public boolean isDone;
+    private String id;
+    private String userQuestTypeId;
+    private String questId;
+    private boolean isDone;
 
-    public UserQuest(int id, UserQuestType userQuestType, Quest quest, boolean isDone) {
+    public UserQuest(String id, String userQuestTypeId, String questId, boolean isDone) {
         this.id = id;
-        this.userQuestType = userQuestType;
-        this.quest = quest;
+        this.userQuestTypeId = userQuestTypeId;
+        this.questId = questId;
         this.isDone = isDone;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getUserQuestTypeId() {
+        return userQuestTypeId;
+    }
+
+    public void setUserQuestTypeId(String userQuestTypeId) {
+        this.userQuestTypeId = userQuestTypeId;
+    }
+
+    public String getQuestId() {
+        return questId;
+    }
+
+    public void getQuestId(String questId) {
+        this.questId = questId;
+    }
+
+    public boolean isDone() {
+        return isDone;
+    }
+
+    public void setDone(boolean done) {
+        isDone = done;
     }
 }

@@ -46,13 +46,10 @@ public class QuestTypeAdapter extends RecyclerView.Adapter<QuestTypeAdapter.Ques
         holder.questTypeDay.setText(currentQuestType.getDay() + " days");
         holder.btnDoQuest.setTag(position);
 
-        holder.btnDoQuest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Integer position =Integer.parseInt(v.getTag().toString());
-                Intent toQuestList = new Intent(context, QuestListActivity.class);
-                context.startActivity(toQuestList);
-            }
+        holder.btnDoQuest.setOnClickListener(v -> {
+            Intent toQuestList = new Intent(context, QuestListActivity.class);
+            toQuestList.putExtra("quest_type_id", questTypes.get(position).getId());
+            context.startActivity(toQuestList);
         });
     }
 

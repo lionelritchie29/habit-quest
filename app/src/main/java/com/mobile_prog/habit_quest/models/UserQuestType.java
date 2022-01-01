@@ -2,13 +2,13 @@ package com.mobile_prog.habit_quest.models;
 
 public class UserQuestType {
     private String id;
-    private String typeId;
+    private String questTypeId;
     private String userId;
     private boolean isDone;
 
-    public UserQuestType(String id, String typeId, String userId, boolean isDone) {
+    public UserQuestType(String id, String questTypeId, String userId, boolean isDone) {
         this.id = id;
-        this.typeId = typeId;
+        this.questTypeId = questTypeId;
         this.userId = userId;
         this.isDone = isDone;
     }
@@ -21,12 +21,12 @@ public class UserQuestType {
         this.id = id;
     }
 
-    public String getTypeId() {
-        return typeId;
+    public String getQuestTypeId() {
+        return questTypeId;
     }
 
-    public void setTypeId(String typeId) {
-        this.typeId = typeId;
+    public void setQuestTypeId(String questTypeId) {
+        this.questTypeId = questTypeId;
     }
 
     public String getUserId() {

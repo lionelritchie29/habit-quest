@@ -6,7 +6,11 @@ import com.google.firebase.firestore.WriteBatch;
 import com.mobile_prog.habit_quest.models.Quest;
 import com.mobile_prog.habit_quest.models.QuestType;
 import com.mobile_prog.habit_quest.models.User;
+import com.mobile_prog.habit_quest.models.UserQuest;
+import com.mobile_prog.habit_quest.models.UserQuestType;
 import com.mobile_prog.habit_quest.services.QuestTypesService;
+import com.mobile_prog.habit_quest.services.QuestsService;
+import com.mobile_prog.habit_quest.services.UserQuestTypesService;
 import com.mobile_prog.habit_quest.services.UsersService;
 
 import java.util.ArrayList;
@@ -115,6 +119,25 @@ public class Seeder {
             }
 
             batch.commit();
+        });
+    }
+
+    public static void seedUserQuests() {
+        WriteBatch batch = db.batch();
+        UserQuestTypesService.getInstance().getAll(userQuestTypes -> {
+            QuestsService.getInstance().getAll(quests -> {
+                for (UserQuestType uqt: userQuestTypes) {
+                    for (Quest q: quests) {
+                        if (q.getQuestTypeId().equals(uqt.getQuestTypeId())) {
+                            DocumentReference docRef = db.collection("user_quests").document();
+                            UserQuest uq = new UserQuest("-1", uqt.getId(), q.getId(), false);
+                            batch.set(docRef, uq);
+                        }
+                    }
+                }
+
+                batch.commit();
+            });
         });
     }
 }

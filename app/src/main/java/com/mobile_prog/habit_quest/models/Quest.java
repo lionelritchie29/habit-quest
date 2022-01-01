@@ -3,13 +3,14 @@ package com.mobile_prog.habit_quest.models;
 public class Quest {
     private String id;
     private QuestType type;
+    private String questTypeId;
     private String name;
     private String description;
     private String tips;
 
-    public Quest(String id, QuestType questType, String name, String description, String tips) {
+    public Quest(String id, String questTypeId, String name, String description, String tips) {
         this.id = id;
-        this.type = questType;
+        this.questTypeId = questTypeId;
         this.name = name;
         this.description = description;
         this.tips = tips;
@@ -55,5 +56,13 @@ public class Quest {
 
     public void setTips(String tips) {
         this.tips = tips;
+    }
+
+    public String getQuestTypeId() {
+        return questTypeId;
+    }
+
+    public void setQuestTypeId(String questTypeId) {
+        this.questTypeId = questTypeId;
     }
 }

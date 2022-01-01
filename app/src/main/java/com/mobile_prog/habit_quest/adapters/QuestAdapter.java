@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mobile_prog.habit_quest.R;
+import com.mobile_prog.habit_quest.services.QuestsService;
 import com.mobile_prog.habit_quest.views.QuestDetailActivity;
 
 import java.util.Vector;
@@ -41,9 +42,13 @@ public class QuestAdapter extends RecyclerView.Adapter<QuestAdapter.QuestViewHol
     public void onBindViewHolder(@NonNull QuestViewHolder holder, int position) {
 
         UserQuest currentQuest = quests.get(position);
-        holder.questName.setText(currentQuest.quest.getName());
-        holder.questIsDone.setText(currentQuest.isDone ? "Done" : "Not Done");
+        holder.questName.setText("Fetching...");
+        holder.questIsDone.setText(currentQuest.isDone() ? "Done" : "Not Done");
         holder.btnDoNow.setTag(position);
+
+        QuestsService.getInstance().getById(currentQuest.getQuestId(), quest -> {
+            holder.questName.setText(quest.getName());
+        });
 
         holder.btnDoNow.setOnClickListener(new View.OnClickListener() {
             @Override
