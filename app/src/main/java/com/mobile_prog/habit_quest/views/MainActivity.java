@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private Button addQuestBtn;
     private RecyclerView currentRv;
     private RecyclerView historyRv;
+    private TextView noCurrent, noHistory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
 
         currentRv = findViewById(R.id.main_current_rv);
         historyRv = findViewById(R.id.main_history_rv);
+
+        noCurrent = findViewById(R.id.txt_no_current_quest);
+        noHistory = findViewById(R.id.txt_no_history_quest);
 
         addQuestBtn.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, QuestTypeListActivity.class);
@@ -79,11 +84,17 @@ public class MainActivity extends AppCompatActivity {
         historyRv.setLayoutManager(new LinearLayoutManager(this));
 
         QuestTypesService.getInstance().getCurrentByUser(AuthContext.getId(), questTypes -> {
+            if(questTypes.size() <= 0){
+                noCurrent.setVisibility(View.VISIBLE);
+            }
             QuestTypeAdapter adapter = new QuestTypeAdapter(this, questTypes);
             currentRv.setAdapter(adapter);
         });
 
         QuestTypesService.getInstance().getHistoryByUser(AuthContext.getId(), questTypes -> {
+            if(questTypes.size() <= 0){
+                noHistory.setVisibility(View.VISIBLE);
+            }
             QuestTypeAdapter adapter = new QuestTypeAdapter(this, questTypes);
             historyRv.setAdapter(adapter);
         });

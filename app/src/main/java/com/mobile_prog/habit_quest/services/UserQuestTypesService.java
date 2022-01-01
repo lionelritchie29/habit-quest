@@ -86,6 +86,26 @@ public class UserQuestTypesService extends BaseService{
         });
     }
 
+    public void getOnGoingQuestByUserAndQuestType(String userId, String questTypeId, Callable<Integer> callback) {
+        db.collection(COLLECTION_NAME).whereEqualTo("quest_type_id", questTypeId).whereEqualTo("user_id", userId).whereEqualTo("is_done", false).get().addOnCompleteListener(task -> {
+            Vector<UserQuestType> userQuestTypes = new Vector<>();
+            if (task.isSuccessful()) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    userQuestTypes.add(new UserQuestType(
+                            document.getId(),
+                            document.getString("quest_type_id"),
+                            document.getString("user_id"),
+                            document.getBoolean("is_done")
+                    ));
+                }
+                callback.call(userQuestTypes.size());
+            } else {
+                Log.d(TAG, "Failed when getting quest type documents by user");
+                callback.call(userQuestTypes.size());
+            }
+        });
+    }
+
     public void add(String userId, String questTypeId, Callable<String> callback) {
         Map<String, Object> userQuestType = new HashMap<>();
         userQuestType.put("id", "-1");

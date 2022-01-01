@@ -1,8 +1,11 @@
 package com.mobile_prog.habit_quest.adapters;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +17,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mobile_prog.habit_quest.contexts.AuthContext;
-import com.mobile_prog.habit_quest.services.QuestTypesService;
 import com.mobile_prog.habit_quest.services.UserQuestTypesService;
 import com.mobile_prog.habit_quest.services.UserQuestsService;
 import com.mobile_prog.habit_quest.views.MainActivity;
@@ -61,22 +63,47 @@ public class QuestTypeAdapter extends RecyclerView.Adapter<QuestTypeAdapter.Ques
         holder.questTypeDay.setText(currentQuestType.getDay() + " days");
         holder.btnDoQuest.setTag(position);
 
+
         holder.btnDoQuest.setOnClickListener(v -> {
             if (isForEnroll) {
-                Toast.makeText(v.getContext(), "Adding quest to your quest list...", Toast.LENGTH_SHORT).show();
-                holder.btnDoQuest.setEnabled(false);
-                String questTypeId = questTypes.get(position).getId();
-                UserQuestTypesService.getInstance().add(AuthContext.getId(), questTypeId, userQuestTypeId -> {
-                    UserQuestsService.getInstance().addForUserQuestType(userQuestTypeId, questTypeId, __ -> {
-                        holder.btnDoQuest.setEnabled(true);
-                        Toast.makeText(v.getContext(), "Sucesfully added this quest to your quest list!", Toast.LENGTH_SHORT).show();
-                        Intent toHome = new Intent(v.getContext(), MainActivity.class);
-                        context.startActivity(toHome);
-
-                        Activity act = (Activity) v.getContext();
-                        act.finish();
-                    });
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                builder.setMessage("Do you want to take this quest?");
+                builder.setTitle("Take Quest");
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
                 });
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(v.getContext(), "Adding quest to your quest list...", Toast.LENGTH_SHORT).show();
+                        holder.btnDoQuest.setEnabled(false);
+
+                        UserQuestTypesService.getInstance().getOnGoingQuestByUserAndQuestType(AuthContext.getId(), currentQuestType.getId(), countQuestType -> {
+                            if(countQuestType <= 0){
+                                String questTypeId = questTypes.get(position).getId();
+                                UserQuestTypesService.getInstance().add(AuthContext.getId(), questTypeId, userQuestTypeId -> {
+                                    UserQuestsService.getInstance().addForUserQuestType(userQuestTypeId, questTypeId, __ -> {
+                                        holder.btnDoQuest.setEnabled(true);
+                                        Toast.makeText(v.getContext(), "Sucesfully added this quest to your quest list!", Toast.LENGTH_SHORT).show();
+                                        Intent toHome = new Intent(v.getContext(), MainActivity.class);
+                                        context.startActivity(toHome);
+
+                                        Activity act = (Activity) v.getContext();
+                                        act.finish();
+                                    });
+                                });
+                            }else{
+                                holder.btnDoQuest.setEnabled(true);
+                                Toast.makeText(v.getContext(), "You have this quest on-going. Cannot take this quest again", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
+
+                AlertDialog alert = builder.create();
+                alert.show();
+
             } else {
                 // go to quest list
                 Intent toQuestList = new Intent(context, QuestListActivity.class);
