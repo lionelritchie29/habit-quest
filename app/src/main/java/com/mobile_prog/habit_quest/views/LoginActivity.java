@@ -27,6 +27,7 @@ import com.mobile_prog.habit_quest.R;
 import com.mobile_prog.habit_quest.contexts.AuthContext;
 import com.mobile_prog.habit_quest.interfaces.Callable;
 import com.mobile_prog.habit_quest.models.User;
+import com.mobile_prog.habit_quest.services.QuestTypesService;
 import com.mobile_prog.habit_quest.services.UsersService;
 
 public class LoginActivity extends AppCompatActivity {
@@ -109,6 +110,5 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             });
         });
-
     }
 }

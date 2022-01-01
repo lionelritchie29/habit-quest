@@ -12,6 +12,7 @@ import java.util.Vector;
 
 import com.mobile_prog.habit_quest.adapters.QuestTypeAdapter;
 import com.mobile_prog.habit_quest.models.QuestType;
+import com.mobile_prog.habit_quest.services.QuestTypesService;
 
 public class QuestTypeListActivity extends AppCompatActivity {
 
@@ -24,15 +25,13 @@ public class QuestTypeListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quest_type_list);
 
-        questTypes = new Vector<>();
-        questTypes.add(new QuestType(1, "Socialize Quest", "Quest ini merupakan quest untuk bersosialisasi dengan banyak orang yang ada diluar sana", 30));
-        questTypes.add(new QuestType(2, "Money Quest", "Quest ini merupakan quest untuk mendapatkan uang yang banyak", 42));
-        questTypes.add(new QuestType(3, "Health Quest", "Quest ini merupakan quest untuk menjaga kesehatan tubuh agar tetap sehat", 7));
-
         recyclerView = findViewById(R.id.recyclerview_quest_type);
-
-        adapter = new QuestTypeAdapter(this, questTypes);
-        recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        QuestTypesService.getInstance().getAll(questTypes -> {
+            this.questTypes = questTypes;
+
+            adapter = new QuestTypeAdapter(this, questTypes);
+            recyclerView.setAdapter(adapter);
+        });
     }
 }

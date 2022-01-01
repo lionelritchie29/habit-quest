@@ -41,9 +41,9 @@ public class QuestTypeAdapter extends RecyclerView.Adapter<QuestTypeAdapter.Ques
     @Override
     public void onBindViewHolder(@NonNull QuestTypeViewHolder holder, int position) {
         QuestType currentQuestType = questTypes.get(position);
-        holder.questTypeName.setText(currentQuestType.name);
-        holder.questTypeDescription.setText(currentQuestType.description);
-        holder.questTypeDay.setText(currentQuestType.day + " days");
+        holder.questTypeName.setText(currentQuestType.getName());
+        holder.questTypeDescription.setText(currentQuestType.getDescription());
+        holder.questTypeDay.setText(currentQuestType.getDay() + " days");
         holder.btnDoQuest.setTag(position);
 
         holder.btnDoQuest.setOnClickListener(new View.OnClickListener() {
