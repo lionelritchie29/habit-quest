@@ -23,6 +23,7 @@ import com.huawei.hms.support.account.service.AccountAuthService;
 import com.huawei.hms.support.hwid.ui.HuaweiIdAuthButton;
 import com.mobile_prog.habit_quest.R;
 import com.mobile_prog.habit_quest.contexts.AuthContext;
+import com.mobile_prog.habit_quest.services.UsersService;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -94,6 +95,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void onSignInSuccess(AuthAccount account) {
+        UsersService.getInstance().addUserIfNotExist(account);
         AuthContext.set(account);
 
         Toast.makeText(this, "Welcome, " + AuthContext.getName(), Toast.LENGTH_SHORT).show();

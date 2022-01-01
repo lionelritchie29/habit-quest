@@ -30,7 +30,7 @@ public class QuestListActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerview_quest);
 
-        User dummyUser = new User(1, "vincent", "vincent@gmail.com","password", 2000, 2);
+        User dummyUser = new User("Dummy", "vincent", "vincent@gmail.com", 2000, 2, "");
         QuestType dummyType = new QuestType(1, "Socialize Quest", "Socialize with your friends to gain more network", 30);
         UserQuestType dummyUserQuestType = new UserQuestType(1, dummyType, dummyUser, false);
         Quest quest1 = new Quest(1, dummyType, "Ask 1 Friend to Hangout", "Ask your friends to hangout with you, minimal 1, greater will be better","Ask with your manner");

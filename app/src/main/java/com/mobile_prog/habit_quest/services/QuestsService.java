@@ -6,17 +6,14 @@ import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-public class QuestsService {
-    private FirebaseFirestore db;
-    private String COLLECTION_NAME = "quests";
+public class QuestsService extends BaseService{
     private static QuestsService instance = null;
 
     private QuestsService() {
-        db = FirebaseFirestore.getInstance();
+        super("quests", "QuestsService");
     }
 
     public static QuestsService getInstance() {
