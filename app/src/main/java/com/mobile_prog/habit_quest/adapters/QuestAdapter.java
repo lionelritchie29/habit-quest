@@ -41,7 +41,7 @@ public class QuestAdapter extends RecyclerView.Adapter<QuestAdapter.QuestViewHol
     public void onBindViewHolder(@NonNull QuestViewHolder holder, int position) {
 
         UserQuest currentQuest = quests.get(position);
-        holder.questName.setText(currentQuest.quest.name);
+        holder.questName.setText(currentQuest.quest.getName());
         holder.questIsDone.setText(currentQuest.isDone ? "Done" : "Not Done");
         holder.btnDoNow.setTag(position);
 
