@@ -2,6 +2,7 @@ package com.mobile_prog.habit_quest.services;
 
 import android.util.Log;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.mobile_prog.habit_quest.interfaces.Callable;
 import com.mobile_prog.habit_quest.models.QuestType;
 import com.mobile_prog.habit_quest.models.UserQuestType;
@@ -67,26 +68,32 @@ public class QuestTypesService extends BaseService{
 
     public void getByUser(String userId, Callable<Vector<QuestType>> callback) {
         UserQuestTypesService.getInstance().getByUser(userId, userQuestTypes -> {
-            Vector<String> questIds = new Vector<>();
-            for (UserQuestType uqt: userQuestTypes) {
-                questIds.add(uqt.getQuestTypeId());
+            Vector<QuestType> questTypes = new Vector<>();
+            final Vector<Integer> counters = new Vector<>();
+            counters.add(0);
+
+            if (userQuestTypes.size() == 0) {
+                callback.call(questTypes);
             }
 
-            db.collection(COLLECTION_NAME).whereIn("__name__", questIds).get().addOnCompleteListener(task -> {
-                Vector<QuestType> qts = new Vector<>();
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        QuestType qt = document.toObject(QuestType.class);
-                        qt.setId(document.getId());
-                        qts.add(qt);
+            for (UserQuestType uqt: userQuestTypes) {
+                db.collection(COLLECTION_NAME).whereEqualTo("__name__", uqt.getQuestTypeId()).get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            QuestType qt = document.toObject(QuestType.class);
+                            qt.setId(document.getId());
+                            questTypes.add(qt);
+                        }
+                    } else {
+                        Log.d(TAG, "Failed when getting quest type documents");
                     }
 
-                    callback.call(qts);
-                } else {
-                    Log.d(TAG, "Failed when getting quest type documents");
-                    callback.call(qts);
-                }
-            });
+                    counters.set(0, counters.get(0) + 1);
+                    if (counters.get(0) == userQuestTypes.size()) {
+                        callback.call(questTypes);
+                    }
+                });
+            }
         });
     }
 }

@@ -1,5 +1,6 @@
 package com.mobile_prog.habit_quest.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -62,13 +63,18 @@ public class QuestTypeAdapter extends RecyclerView.Adapter<QuestTypeAdapter.Ques
 
         holder.btnDoQuest.setOnClickListener(v -> {
             if (isForEnroll) {
-                // add quest type and its related quests to the db for the corresponding user
+                Toast.makeText(v.getContext(), "Adding quest to your quest list...", Toast.LENGTH_SHORT).show();
+                holder.btnDoQuest.setEnabled(false);
                 String questTypeId = questTypes.get(position).getId();
                 UserQuestTypesService.getInstance().add(AuthContext.getId(), questTypeId, userQuestTypeId -> {
                     UserQuestsService.getInstance().addForUserQuestType(userQuestTypeId, questTypeId, __ -> {
+                        holder.btnDoQuest.setEnabled(true);
                         Toast.makeText(v.getContext(), "Sucesfully added this quest to your quest list!", Toast.LENGTH_SHORT).show();
                         Intent toHome = new Intent(v.getContext(), MainActivity.class);
                         context.startActivity(toHome);
+
+                        Activity act = (Activity) v.getContext();
+                        act.finish();
                     });
                 });
             } else {
