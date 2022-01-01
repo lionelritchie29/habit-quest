@@ -4,8 +4,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Debug;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +25,8 @@ import com.huawei.hms.support.account.service.AccountAuthService;
 import com.huawei.hms.support.hwid.ui.HuaweiIdAuthButton;
 import com.mobile_prog.habit_quest.R;
 import com.mobile_prog.habit_quest.contexts.AuthContext;
+import com.mobile_prog.habit_quest.interfaces.Callable;
+import com.mobile_prog.habit_quest.models.User;
 import com.mobile_prog.habit_quest.services.UsersService;
 
 public class LoginActivity extends AppCompatActivity {
@@ -53,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
         huaweiSignInBtn = findViewById(R.id.huawei_sign_in_btn);
         huaweiSignInBtn.setOnClickListener(v -> {
             huaweiSignInBtn.setEnabled(false);
-            Toast.makeText(this, "Processing your request, please wait...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Signing you in, please wait...", Toast.LENGTH_SHORT).show();
             silentSignInByHwId();
         });
     }
@@ -95,12 +99,16 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void onSignInSuccess(AuthAccount account) {
-        UsersService.getInstance().addUserIfNotExist(account);
-        AuthContext.set(account);
+        Context context = this;
+        UsersService.getInstance().addUserIfNotExist(account, __ -> {
+            UsersService.getInstance().getUser(account.getUnionId(), user -> {
+                AuthContext.set(user);
 
-        Toast.makeText(this, "Welcome, " + AuthContext.getName(), Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        startActivity(intent);
-        finish();
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            });
+        });
+
     }
 }

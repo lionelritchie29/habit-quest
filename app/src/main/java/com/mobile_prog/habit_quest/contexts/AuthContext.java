@@ -3,26 +3,19 @@ package com.mobile_prog.habit_quest.contexts;
 import android.net.Uri;
 
 import com.huawei.hms.support.account.result.AuthAccount;
+import com.mobile_prog.habit_quest.models.User;
 
 public class AuthContext {
-    private static AuthAccount current = null;
-
-    //bisa dapet:
-//    Log.i(TAG, "display name:" + authAccount.getDisplayName());
-//    Log.i(TAG, "photo uri string:" + authAccount.getAvatarUriString());
-//    Log.i(TAG, "photo uri:" + authAccount.getAvatarUri());
-//    Log.i(TAG, "email:" + authAccount.getEmail());
-//    Log.i(TAG, "openid:" + authAccount.getOpenId());
-//    Log.i(TAG, "unionid:" + authAccount.getUnionId());
+    private static User current = null;
 
     public static String getName() {
         if (current == null) return "";
-        return current.getDisplayName();
+        return current.getUsername();
     }
 
     public static String getAvatarUriString() {
         if (current == null) return "";
-        return current.getAvatarUriString();
+        return current.getAvatarUri();
     }
 
     public static String getEmail() {
@@ -32,10 +25,20 @@ public class AuthContext {
 
     public static String getId() {
         if (current == null) return "";
-        return current.getUnionId();
+        return current.getId();
     }
 
-    public static void set(AuthAccount account) {
-        current = account;
+    public static void set(User user) {
+        current = user;
+    }
+
+    public static Integer getLevel() {
+        if (current == null) return -1;
+        return current.getLevel();
+    }
+
+    public static Integer getExp() {
+        if (current == null) return -1;
+        return current.getExp();
     }
 }

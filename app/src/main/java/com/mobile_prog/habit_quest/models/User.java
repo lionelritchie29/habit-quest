@@ -17,6 +17,8 @@ public class User {
         this.avatarUri = avatarUri;
     }
 
+    public User() {}
+
     public String getId() {
         return id;
     }
