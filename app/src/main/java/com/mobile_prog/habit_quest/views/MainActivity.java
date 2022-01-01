@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.mobile_prog.habit_quest.R;
 import com.mobile_prog.habit_quest.contexts.AuthContext;
-import com.mobile_prog.habit_quest.services.QuestsService;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -24,8 +23,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        Intent intent = new Intent(MainActivity.this, QuestTypeListActivity.class);
-//        startActivity(intent);
+        Intent intent = new Intent(MainActivity.this, QuestTypeListActivity.class);
+        startActivity(intent);
         disableNightMode();
         initialize();
         setUser();

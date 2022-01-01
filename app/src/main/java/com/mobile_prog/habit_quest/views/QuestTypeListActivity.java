@@ -11,6 +11,7 @@ import com.mobile_prog.habit_quest.R;
 import java.util.Vector;
 
 import com.mobile_prog.habit_quest.adapters.QuestTypeAdapter;
+import com.mobile_prog.habit_quest.contexts.AuthContext;
 import com.mobile_prog.habit_quest.models.QuestType;
 import com.mobile_prog.habit_quest.services.QuestTypesService;
 
@@ -27,7 +28,7 @@ public class QuestTypeListActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerview_quest_type);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        QuestTypesService.getInstance().getAll(questTypes -> {
+        QuestTypesService.getInstance().getByUser(AuthContext.getId(), questTypes -> {
             this.questTypes = questTypes;
 
             adapter = new QuestTypeAdapter(this, questTypes);

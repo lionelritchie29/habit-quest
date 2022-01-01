@@ -2,24 +2,13 @@ package com.mobile_prog.habit_quest.services;
 
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.huawei.hms.support.account.result.AuthAccount;
 import com.mobile_prog.habit_quest.interfaces.Callable;
 import com.mobile_prog.habit_quest.models.User;
-import com.mobile_prog.habit_quest.views.LoginActivity;
-
-import org.w3c.dom.Document;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Vector;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -40,6 +29,23 @@ public class UsersService extends BaseService{
         }
 
         return  instance;
+    }
+
+    public void getAll(Callable<Vector<User>> callback) {
+        db.collection(COLLECTION_NAME).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                 Vector<User> users = new Vector<>();
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    User user = document.toObject(User.class);
+                    user.setId(document.getId());
+                    users.add(user);
+                }
+
+                callback.call(users);
+            } else {
+                Log.d(TAG,"Failed when getting user documents");
+            }
+        });
     }
 
     public void addUserIfNotExist(AuthAccount account, Callable callback) {
