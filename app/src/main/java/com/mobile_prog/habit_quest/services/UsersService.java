@@ -33,8 +33,8 @@ public class UsersService extends BaseService{
 
     public void getAll(Callable<Vector<User>> callback) {
         db.collection(COLLECTION_NAME).get().addOnCompleteListener(task -> {
+             Vector<User> users = new Vector<>();
             if (task.isSuccessful()) {
-                 Vector<User> users = new Vector<>();
                 for (QueryDocumentSnapshot document : task.getResult()) {
                     User user = document.toObject(User.class);
                     user.setId(document.getId());
@@ -44,6 +44,7 @@ public class UsersService extends BaseService{
                 callback.call(users);
             } else {
                 Log.d(TAG,"Failed when getting user documents");
+                callback.call(users);
             }
         });
     }
@@ -78,6 +79,7 @@ public class UsersService extends BaseService{
                 callback.call(doc.toObject(User.class));
             } else {
                 Log.d(TAG, "Document does not exists");
+                callback.call(null);
             }
         });
     }

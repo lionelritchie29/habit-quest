@@ -53,6 +53,7 @@ public class QuestsService extends BaseService{
                 callback.call(quests);
             } else {
                 Log.w(this.getClass().getName(), "Error getting documents.", task.getException());
+                callback.call(null);
             }
         });
     }
@@ -72,6 +73,7 @@ public class QuestsService extends BaseService{
                 callback.call(quest);
             } else {
                 Log.w(this.getClass().getName(), "Error getting documents.", task.getException());
+                callback.call(null);
             }
         });
     }

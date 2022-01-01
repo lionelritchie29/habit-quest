@@ -27,8 +27,8 @@ public class UserQuestsService extends BaseService{
     public void getByUserAndQuestType(String userId, String questTypeId, Callable<Vector<UserQuest>> callback) {
         UserQuestTypesService.getInstance().getByUserAndQuestType(userId, questTypeId, userQuestType -> {
             db.collection(COLLECTION_NAME).whereEqualTo("user_quest_type_id", userQuestType.getId()).get().addOnCompleteListener(task -> {
+                Vector<UserQuest> userQuests = new Vector<>();
                 if (task.isSuccessful()) {
-                    Vector<UserQuest> userQuests = new Vector<>();
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         userQuests.add(new UserQuest(
                                 document.getId(),
@@ -41,6 +41,7 @@ public class UserQuestsService extends BaseService{
                     callback.call(userQuests);
                 } else {
                     Log.w(this.getClass().getName(), "Error getting user quests documents.", task.getException());
+                    callback.call(userQuests);
                 }
             });
         });

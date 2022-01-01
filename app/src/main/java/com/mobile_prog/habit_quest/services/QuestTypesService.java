@@ -48,8 +48,8 @@ public class QuestTypesService extends BaseService{
             }
 
             db.collection(COLLECTION_NAME).whereNotIn("__name__", questIds).get().addOnCompleteListener(task -> {
+                Vector<QuestType> qts = new Vector<>();
                 if (task.isSuccessful()) {
-                    Vector<QuestType> qts = new Vector<>();
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         QuestType qt = document.toObject(QuestType.class);
                         qt.setId(document.getId());
@@ -59,6 +59,7 @@ public class QuestTypesService extends BaseService{
                     callback.call(qts);
                 } else {
                     Log.d(TAG, "Failed when getting quest type documents");
+                    callback.call(qts);
                 }
             });
         });
@@ -72,8 +73,8 @@ public class QuestTypesService extends BaseService{
             }
 
             db.collection(COLLECTION_NAME).whereIn("__name__", questIds).get().addOnCompleteListener(task -> {
+                Vector<QuestType> qts = new Vector<>();
                 if (task.isSuccessful()) {
-                    Vector<QuestType> qts = new Vector<>();
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         QuestType qt = document.toObject(QuestType.class);
                         qt.setId(document.getId());
@@ -83,6 +84,7 @@ public class QuestTypesService extends BaseService{
                     callback.call(qts);
                 } else {
                     Log.d(TAG, "Failed when getting quest type documents");
+                    callback.call(qts);
                 }
             });
         });
