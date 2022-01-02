@@ -13,6 +13,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.huawei.hms.ads.AdParam;
+import com.huawei.hms.ads.HwAds;
+import com.huawei.hms.ads.banner.BannerView;
 import com.mobile_prog.habit_quest.R;
 import com.mobile_prog.habit_quest.adapters.QuestTypeAdapter;
 import com.mobile_prog.habit_quest.contexts.AuthContext;
@@ -34,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView currentRv;
     private RecyclerView historyRv;
     private TextView noCurrent, noHistory;
+    private BannerView bannerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +46,17 @@ public class MainActivity extends AppCompatActivity {
 
         disableNightMode();
         initialize();
+        configureAds();
         setUser();
         setRecyclerView();
     }
 
     private void initialize() {
+        HwAds.init(this);
+
+        bannerView = findViewById(R.id.hw_banner_view);
+        bannerView.setBannerRefresh(60);
+
         avatarImgView = findViewById(R.id.main_user_avatar);
         userNameTv = findViewById(R.id.main_user_name);
         userLevelTv = findViewById(R.id.main_user_level);
@@ -62,6 +72,11 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, QuestTypeListActivity.class);
             startActivity(intent);
         });
+    }
+
+    private void configureAds() {
+        AdParam adParam = new AdParam.Builder().build();
+        bannerView.loadAd(adParam);
     }
 
     private void disableNightMode() {

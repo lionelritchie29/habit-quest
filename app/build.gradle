@@ -17,6 +17,12 @@ android {
             v1SigningEnabled true
             v2SigningEnabled true
         }
+//        config {
+//            keyAlias 'HMS'
+//            storeFile file('C:/Users/lione/AndroidStudioProjects/HabitQuest/app/HMSKey.jks')
+//            storePassword 'habitquest'
+//            keyPassword 'habitquest'
+//        }
     }
 
     defaultConfig {
@@ -63,4 +69,5 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+    implementation 'com.huawei.hms:ads:3.4.49.301'
 }
