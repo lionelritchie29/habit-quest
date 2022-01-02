@@ -63,7 +63,6 @@ public class QuestTypeAdapter extends RecyclerView.Adapter<QuestTypeAdapter.Ques
         holder.questTypeDay.setText(currentQuestType.getDay() + " days");
         holder.btnDoQuest.setTag(position);
 
-
         holder.btnDoQuest.setOnClickListener(v -> {
             if (isForEnroll) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());

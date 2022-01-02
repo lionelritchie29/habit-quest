@@ -1,9 +1,12 @@
 package com.mobile_prog.habit_quest.services;
 
 import android.util.Log;
+
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.mobile_prog.habit_quest.interfaces.Callable;
+import com.mobile_prog.habit_quest.models.Quest;
 import com.mobile_prog.habit_quest.models.QuestType;
 import com.mobile_prog.habit_quest.models.UserQuestType;
 
@@ -159,6 +162,25 @@ public class QuestTypesService extends BaseService{
                         callback.call(questTypes);
                     }
                 });
+            }
+        });
+    }
+
+    public void getById(String questTypeId, Callable<QuestType> callback) {
+        db.collection(COLLECTION_NAME).document(questTypeId).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                QuestType questType = new QuestType(
+                        document.getId(),
+                        document.getString("name"),
+                        document.getString("description"),
+                        document.getLong("day").intValue()
+                );
+
+                callback.call(questType);
+            } else {
+                Log.w(this.getClass().getName(), "Error getting documents.", task.getException());
+                callback.call(null);
             }
         });
     }

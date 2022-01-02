@@ -3,8 +3,11 @@ package com.mobile_prog.habit_quest.services;
 import android.util.Log;
 
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.mobile_prog.habit_quest.contexts.AuthContext;
 import com.mobile_prog.habit_quest.interfaces.Callable;
+import com.mobile_prog.habit_quest.models.QuestType;
 import com.mobile_prog.habit_quest.models.UserQuestType;
 
 import java.util.HashMap;
@@ -119,6 +122,22 @@ public class UserQuestTypesService extends BaseService{
                 callback.call(docRef.getId());
             } else {
                 Log.d(TAG, "Failed when getting quest type documents by user");
+                callback.call(null);
+            }
+        });
+    }
+
+    public void delete(String questTypeId, Callable<String> callback){
+        db.collection(COLLECTION_NAME).whereEqualTo("quest_type_id", questTypeId).whereEqualTo("is_done",false).whereEqualTo("user_id", AuthContext.getId()).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    String id = document.getId();
+                    document.getReference().delete();
+                    callback.call(id);
+                }
+
+            } else {
+                Log.w(this.getClass().getName(), "Error getting documents.", task.getException());
                 callback.call(null);
             }
         });

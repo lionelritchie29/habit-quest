@@ -4,9 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Debug;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mobile_prog.habit_quest.R;
 
@@ -19,12 +27,16 @@ import com.mobile_prog.habit_quest.models.QuestType;
 import com.mobile_prog.habit_quest.models.User;
 import com.mobile_prog.habit_quest.models.UserQuest;
 import com.mobile_prog.habit_quest.models.UserQuestType;
+import com.mobile_prog.habit_quest.services.QuestTypesService;
+import com.mobile_prog.habit_quest.services.UserQuestTypesService;
 import com.mobile_prog.habit_quest.services.UserQuestsService;
 
 public class QuestListActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
+    TextView questTypeName;
+    Button abandon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,14 +46,53 @@ public class QuestListActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         String questTypeId = extras.getString("quest_type_id");
 
+        abandon = findViewById(R.id.btn_abandon);
+        questTypeName = findViewById(R.id.txt_quest_list_name);
         recyclerView = findViewById(R.id.recyclerview_quest);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        Log.d("TEST", questTypeId);
+        QuestTypesService.getInstance().getById(questTypeId, questType -> {
+            questTypeName.setText(questType.getName());
+
+        });
+
         UserQuestsService.getInstance().getByUserAndQuestType(AuthContext.getId(), questTypeId, userQuests -> {
             Log.d("TEST", String.valueOf(userQuests.size()));
             adapter = new QuestAdapter(this, userQuests);
             recyclerView.setAdapter(adapter);
+        });
+
+        abandon.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+            builder.setMessage("Do you want abandon this quest?");
+            builder.setTitle("Abandon Quest");
+            builder.setNegativeButton("No", (dialog, which) -> dialog.cancel());
+            builder.setPositiveButton("Yes", (dialog, which) -> {
+                Toast.makeText(v.getContext(), "Abandon quest...", Toast.LENGTH_SHORT).show();
+                abandon.setEnabled(false);
+
+                UserQuestTypesService.getInstance().delete(questTypeId, userQuestTypeId -> {
+                    if(userQuestTypeId != null){
+                        UserQuestsService.getInstance().deleteByUserQuestType(userQuestTypeId, isSuccess -> {
+                            if(isSuccess){
+                                Toast.makeText(v.getContext(), "Success abandon quest", Toast.LENGTH_SHORT).show();
+                            }else{
+                                Toast.makeText(v.getContext(), "Error when abandon quest", Toast.LENGTH_SHORT).show();
+                            }
+                            Intent toHome = new Intent(v.getContext(), MainActivity.class);
+                            v.getContext().startActivity(toHome);
+
+                            Activity act = (Activity) v.getContext();
+                            act.finish();
+                        });
+                    }else{
+                        Toast.makeText(v.getContext(), "Quest not found", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            });
+
+            AlertDialog alert = builder.create();
+            alert.show();
         });
     }
 }

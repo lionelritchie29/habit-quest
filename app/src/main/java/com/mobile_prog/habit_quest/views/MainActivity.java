@@ -99,16 +99,16 @@ public class MainActivity extends AppCompatActivity {
         historyRv.setLayoutManager(new LinearLayoutManager(this));
 
         QuestTypesService.getInstance().getCurrentByUser(AuthContext.getId(), questTypes -> {
-            if(questTypes.size() <= 0){
-                noCurrent.setVisibility(View.VISIBLE);
+            if(questTypes.size() > 0){
+                noCurrent.setVisibility(View.GONE);
             }
             QuestTypeAdapter adapter = new QuestTypeAdapter(this, questTypes);
             currentRv.setAdapter(adapter);
         });
 
         QuestTypesService.getInstance().getHistoryByUser(AuthContext.getId(), questTypes -> {
-            if(questTypes.size() <= 0){
-                noHistory.setVisibility(View.VISIBLE);
+            if(questTypes.size() > 0){
+                noHistory.setVisibility(View.GONE);
             }
             QuestTypeAdapter adapter = new QuestTypeAdapter(this, questTypes);
             historyRv.setAdapter(adapter);

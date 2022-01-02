@@ -3,6 +3,7 @@ package com.mobile_prog.habit_quest.services;
 import android.util.Log;
 
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.WriteBatch;
 import com.mobile_prog.habit_quest.interfaces.Callable;
@@ -77,6 +78,20 @@ public class UserQuestsService extends BaseService{
                     callback.call(null);
                 }
             });
+        });
+    }
+
+    public void deleteByUserQuestType(String userQuestTypeId, Callable<Boolean> callback){
+        db.collection(COLLECTION_NAME).whereEqualTo("user_quest_type_id", userQuestTypeId).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    document.getReference().delete();
+                }
+                callback.call(true);
+            } else {
+                Log.d(TAG, "Failed when getting quest type documents by user");
+                callback.call(false);
+            }
         });
     }
 }
