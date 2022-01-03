@@ -32,26 +32,30 @@ public class UserQuestsService extends BaseService{
         return instance;
     }
 
-    public void getByUserAndQuestType(String userId, String questTypeId, Callable<Vector<UserQuest>> callback) {
-        UserQuestTypesService.getInstance().getByUserAndQuestType(userId, questTypeId, userQuestType -> {
-            db.collection(COLLECTION_NAME).whereEqualTo("user_quest_type_id", userQuestType.getId()).get().addOnCompleteListener(task -> {
-                Vector<UserQuest> userQuests = new Vector<>();
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        userQuests.add(new UserQuest(
-                                document.getId(),
-                                document.getString("user_quest_type_id"),
-                                document.getString("quest_id"),
-                                document.getBoolean("is_done")
-                        ));
-                    }
+    public void getByUserAndQuestType(String userId, String questTypeId, boolean isDone, Callable<Vector<UserQuest>> callback) {
+        UserQuestTypesService.getInstance().getByUserAndQuestType(userId, questTypeId, isDone, userQuestType -> {
+            if (userQuestType == null) {
+                callback.call(new Vector<UserQuest>());
+            } else {
+                db.collection(COLLECTION_NAME).whereEqualTo("user_quest_type_id", userQuestType.getId()).get().addOnCompleteListener(task -> {
+                    Vector<UserQuest> userQuests = new Vector<>();
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            userQuests.add(new UserQuest(
+                                    document.getId(),
+                                    document.getString("user_quest_type_id"),
+                                    document.getString("quest_id"),
+                                    document.getBoolean("is_done")
+                            ));
+                        }
 
-                    callback.call(userQuests);
-                } else {
-                    Log.w(this.getClass().getName(), "Error getting user quests documents.", task.getException());
-                    callback.call(userQuests);
-                }
-            });
+                        callback.call(userQuests);
+                    } else {
+                        Log.w(this.getClass().getName(), "Error getting user quests documents.", task.getException());
+                        callback.call(userQuests);
+                    }
+                });
+            }
         });
     }
 

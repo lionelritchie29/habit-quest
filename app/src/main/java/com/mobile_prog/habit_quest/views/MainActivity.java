@@ -102,32 +102,27 @@ public class MainActivity extends AppCompatActivity {
         currentRv.setLayoutManager(new LinearLayoutManager(this));
         historyRv.setLayoutManager(new LinearLayoutManager(this));
 
-        QuestTypesService.getInstance().getCurrentByUser(AuthContext.getId(), questTypes -> {
-            if(questTypes.size() > 0){
-                noCurrent.setVisibility(View.GONE);
-            }
-            QuestTypeAdapter adapter = new QuestTypeAdapter(this, questTypes);
-            currentRv.setAdapter(adapter);
-        });
-
-        QuestTypesService.getInstance().getHistoryByUser(AuthContext.getId(), questTypes -> {
-            if(questTypes.size() > 0){
-                noHistory.setVisibility(View.GONE);
-            }
-            QuestTypeAdapter adapter = new QuestTypeAdapter(this, questTypes);
-            historyRv.setAdapter(adapter);
-        });
+        fetchAndPopulateData();
     }
 
     @Override
     public void onResume(){
         super.onResume();
 
+        fetchAndPopulateData();
+        UsersService.getInstance().getUser(AuthContext.getId(), user -> {
+            AuthContext.set(user);
+            userLevelTv.setText(AuthContext.getLevel().toString());
+            expTv.setText(String.format("( Exp: %d / %d )", AuthContext.getExp(), AuthContext.getLevel() * 150));
+        });
+    }
+
+    private void fetchAndPopulateData() {
         QuestTypesService.getInstance().getCurrentByUser(AuthContext.getId(), questTypes -> {
             if(questTypes.size() > 0){
                 noCurrent.setVisibility(View.GONE);
             }
-            QuestTypeAdapter adapter = new QuestTypeAdapter(this, questTypes);
+            QuestTypeAdapter adapter = new QuestTypeAdapter(this, questTypes, false, true);
             currentRv.setAdapter(adapter);
         });
 
@@ -135,14 +130,8 @@ public class MainActivity extends AppCompatActivity {
             if(questTypes.size() > 0){
                 noHistory.setVisibility(View.GONE);
             }
-            QuestTypeAdapter adapter = new QuestTypeAdapter(this, questTypes);
+            QuestTypeAdapter adapter = new QuestTypeAdapter(this, questTypes, false, false);
             historyRv.setAdapter(adapter);
-        });
-
-        UsersService.getInstance().getUser(AuthContext.getId(), user -> {
-            AuthContext.set(user);
-            userLevelTv.setText(AuthContext.getLevel().toString());
-            expTv.setText(String.format("( Exp: %d / %d )", AuthContext.getExp(), AuthContext.getLevel() * 150));
         });
     }
 }

@@ -37,7 +37,9 @@ public class QuestListActivity extends AppCompatActivity {
     RecyclerView.Adapter adapter;
     TextView questTypeName;
     Button abandon;
+
     private String questTypeId;
+    private boolean isForCurrent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,7 @@ public class QuestListActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         questTypeId = extras.getString("quest_type_id");
+        isForCurrent = extras.getBoolean("is_for_current");
 
         abandon = findViewById(R.id.btn_abandon);
         questTypeName = findViewById(R.id.txt_quest_list_name);
@@ -56,12 +59,7 @@ public class QuestListActivity extends AppCompatActivity {
             questTypeName.setText(questType.getName());
         });
 
-        UserQuestsService.getInstance().getByUserAndQuestType(AuthContext.getId(), questTypeId, userQuests -> {
-            adapter = new QuestAdapter(this, userQuests);
-            recyclerView.setAdapter(adapter);
-
-            setAbandonBtnVisiblity(userQuests);
-        });
+        fetchAndPopulateData();
 
         abandon.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
@@ -101,11 +99,25 @@ public class QuestListActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
 
-        UserQuestsService.getInstance().getByUserAndQuestType(AuthContext.getId(), questTypeId, userQuests -> {
-            adapter = new QuestAdapter(this, userQuests);
-            recyclerView.setAdapter(adapter);
-            setAbandonBtnVisiblity(userQuests);
-        });
+        fetchAndPopulateData();
+    }
+
+    private void fetchAndPopulateData() {
+        if (isForCurrent) {
+            UserQuestsService.getInstance().getByUserAndQuestType(AuthContext.getId(), questTypeId, false,  userQuests -> {
+                adapter = new QuestAdapter(this, userQuests);
+                recyclerView.setAdapter(adapter);
+
+                setAbandonBtnVisiblity(userQuests);
+            });
+        } else {
+            UserQuestsService.getInstance().getByUserAndQuestType(AuthContext.getId(), questTypeId, true, userQuests -> {
+                adapter = new QuestAdapter(this, userQuests);
+                recyclerView.setAdapter(adapter);
+
+                setAbandonBtnVisiblity(userQuests);
+            });
+        }
     }
 
     private void setAbandonBtnVisiblity(Vector<UserQuest> userQuests) {

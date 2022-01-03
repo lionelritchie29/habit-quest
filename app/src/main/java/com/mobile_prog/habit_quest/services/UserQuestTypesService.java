@@ -70,8 +70,8 @@ public class UserQuestTypesService extends BaseService{
         });
     }
 
-    public void getByUserAndQuestType(String userId, String questTypeId, Callable<UserQuestType> callback) {
-        db.collection(COLLECTION_NAME).whereEqualTo("quest_type_id", questTypeId).whereEqualTo("user_id", userId).get().addOnCompleteListener(task -> {
+    public void getByUserAndQuestType(String userId, String questTypeId, boolean isDone, Callable<UserQuestType> callback) {
+        db.collection(COLLECTION_NAME).whereEqualTo("quest_type_id", questTypeId).whereEqualTo("user_id", userId).whereEqualTo("is_done", isDone).get().addOnCompleteListener(task -> {
             Vector<UserQuestType> userQuestTypes = new Vector<>();
             if (task.isSuccessful()) {
                 for (QueryDocumentSnapshot document : task.getResult()) {
@@ -82,10 +82,15 @@ public class UserQuestTypesService extends BaseService{
                             document.getBoolean("is_done")
                     ));
                 }
-                callback.call(userQuestTypes.get(0));
+
+                if (userQuestTypes.size() == 0) {
+                    callback.call(null);
+                } else {
+                    callback.call(userQuestTypes.get(0));
+                }
             } else {
                 Log.d(TAG, "Failed when getting quest type documents by user");
-                callback.call(userQuestTypes.get(0));
+                callback.call(null);
             }
         });
     }

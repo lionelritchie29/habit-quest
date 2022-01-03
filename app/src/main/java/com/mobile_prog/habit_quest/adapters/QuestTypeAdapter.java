@@ -34,6 +34,7 @@ public class QuestTypeAdapter extends RecyclerView.Adapter<QuestTypeAdapter.Ques
     Vector<QuestType> questTypes;
     Context context;
     private boolean isForEnroll = false;
+    private boolean isForCurrent = false;
 
     public QuestTypeAdapter(Context context, Vector<QuestType> questTypes){
         mInflater = LayoutInflater.from(context);
@@ -46,6 +47,14 @@ public class QuestTypeAdapter extends RecyclerView.Adapter<QuestTypeAdapter.Ques
         this.context = context;
         this.questTypes = questTypes;
         this.isForEnroll = true;
+    }
+
+    public QuestTypeAdapter(Context context, Vector<QuestType> questTypes, boolean isForEnroll, boolean isForCurrent){
+        mInflater = LayoutInflater.from(context);
+        this.context = context;
+        this.questTypes = questTypes;
+        this.isForEnroll = isForEnroll;
+        this.isForCurrent = isForCurrent;
     }
 
     @NonNull
@@ -107,6 +116,7 @@ public class QuestTypeAdapter extends RecyclerView.Adapter<QuestTypeAdapter.Ques
             } else {
                 // go to quest list
                 Intent toQuestList = new Intent(context, QuestListActivity.class);
+                toQuestList.putExtra("is_for_current", isForCurrent);
                 toQuestList.putExtra("quest_type_id", questTypes.get(position).getId());
                 context.startActivity(toQuestList);
             }
