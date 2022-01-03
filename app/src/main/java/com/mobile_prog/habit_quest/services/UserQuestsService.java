@@ -94,4 +94,34 @@ public class UserQuestsService extends BaseService{
             }
         });
     }
+
+    public void markAsDoneById(String userQuestId, Callable<Boolean> callback) {
+        db.collection(COLLECTION_NAME).document(userQuestId).update("is_done", true)
+            .addOnSuccessListener(__ -> callback.call(true))
+            .addOnFailureListener(e -> {
+               Log.d(TAG, "Failed when marking the quest as done");
+               callback.call(false);
+            });
+    }
+
+    public void getByUserQuestTypeId(String userQuestTypeId, Callable<Vector<UserQuest>> callback) {
+        db.collection(COLLECTION_NAME).whereEqualTo("user_quest_type_id", userQuestTypeId).get().addOnCompleteListener(task -> {
+            Vector<UserQuest> userQuests = new Vector<>();
+            if (task.isSuccessful()) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    userQuests.add(new UserQuest(
+                            document.getId(),
+                            document.getString("user_quest_type_id"),
+                            document.getString("quest_id"),
+                            document.getBoolean("is_done")
+                    ));
+                }
+
+                callback.call(userQuests);
+            } else {
+                Log.w(this.getClass().getName(), "Error getting user quests documents.", task.getException());
+                callback.call(userQuests);
+            }
+        });
+    }
 }

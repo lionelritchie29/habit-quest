@@ -83,4 +83,30 @@ public class UsersService extends BaseService{
             }
         });
     }
+
+    public void increaseExpAndLevel(String userId, int amount, Callable<Boolean> callback) {
+        db.collection(COLLECTION_NAME).document(userId).get().addOnCompleteListener(task -> {
+           if (task.isSuccessful()) {
+               DocumentSnapshot doc = task.getResult();
+               long currentExp = (Long) doc.get("exp");
+               long currentLevel = (Long) doc.get("level");
+               long newExp = currentExp + amount;
+               long newLevel = currentLevel;
+
+               final long EXP_THRESHOLD = currentLevel * 150;
+               if (newExp > EXP_THRESHOLD) {
+                   newLevel = currentLevel + 1;
+                   newExp = newExp - EXP_THRESHOLD;
+               }
+
+               callback.call(true);
+               db.collection(COLLECTION_NAME).document(userId).update("level", newLevel, "exp", newExp)
+                   .addOnSuccessListener(__ -> callback.call(true))
+                   .addOnFailureListener(__ -> callback.call(false));
+           } else {
+               Log.d(TAG, "Document does not exists");
+               callback.call(false);
+           }
+        });
+    }
 }

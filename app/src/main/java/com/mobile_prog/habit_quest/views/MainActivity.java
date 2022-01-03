@@ -22,6 +22,7 @@ import com.mobile_prog.habit_quest.contexts.AuthContext;
 import com.mobile_prog.habit_quest.models.Quest;
 import com.mobile_prog.habit_quest.models.QuestType;
 import com.mobile_prog.habit_quest.services.QuestTypesService;
+import com.mobile_prog.habit_quest.services.UsersService;
 import com.mobile_prog.habit_quest.utils.Seeder;
 
 import java.util.Vector;
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private Button addQuestBtn;
     private RecyclerView currentRv;
     private RecyclerView historyRv;
+    private TextView expTv;
     private TextView noCurrent, noHistory;
     private BannerView bannerView;
 
@@ -60,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         avatarImgView = findViewById(R.id.main_user_avatar);
         userNameTv = findViewById(R.id.main_user_name);
         userLevelTv = findViewById(R.id.main_user_level);
+        expTv = findViewById(R.id.main_exp_tv);
         addQuestBtn = findViewById(R.id.main_add_quest_btn);
 
         currentRv = findViewById(R.id.main_current_rv);
@@ -86,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
     private void setUser() {
         userNameTv.setText(AuthContext.getName());
         userLevelTv.setText(AuthContext.getLevel().toString());
+        expTv.setText(String.format("( Exp: %d / %d )", AuthContext.getExp(), AuthContext.getLevel() * 150));
 
         if (AuthContext.getAvatarUriString().isEmpty()) {
             Glide.with(this).load("https://i.pravatar.cc/300").into(avatarImgView);
@@ -112,6 +116,33 @@ public class MainActivity extends AppCompatActivity {
             }
             QuestTypeAdapter adapter = new QuestTypeAdapter(this, questTypes);
             historyRv.setAdapter(adapter);
+        });
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        QuestTypesService.getInstance().getCurrentByUser(AuthContext.getId(), questTypes -> {
+            if(questTypes.size() > 0){
+                noCurrent.setVisibility(View.GONE);
+            }
+            QuestTypeAdapter adapter = new QuestTypeAdapter(this, questTypes);
+            currentRv.setAdapter(adapter);
+        });
+
+        QuestTypesService.getInstance().getHistoryByUser(AuthContext.getId(), questTypes -> {
+            if(questTypes.size() > 0){
+                noHistory.setVisibility(View.GONE);
+            }
+            QuestTypeAdapter adapter = new QuestTypeAdapter(this, questTypes);
+            historyRv.setAdapter(adapter);
+        });
+
+        UsersService.getInstance().getUser(AuthContext.getId(), user -> {
+            AuthContext.set(user);
+            userLevelTv.setText(AuthContext.getLevel().toString());
+            expTv.setText(String.format("( Exp: %d / %d )", AuthContext.getExp(), AuthContext.getLevel() * 150));
         });
     }
 }

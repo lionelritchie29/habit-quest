@@ -37,6 +37,7 @@ public class QuestListActivity extends AppCompatActivity {
     RecyclerView.Adapter adapter;
     TextView questTypeName;
     Button abandon;
+    private String questTypeId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,7 @@ public class QuestListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_quest_list);
 
         Bundle extras = getIntent().getExtras();
-        String questTypeId = extras.getString("quest_type_id");
+        questTypeId = extras.getString("quest_type_id");
 
         abandon = findViewById(R.id.btn_abandon);
         questTypeName = findViewById(R.id.txt_quest_list_name);
@@ -53,13 +54,13 @@ public class QuestListActivity extends AppCompatActivity {
 
         QuestTypesService.getInstance().getById(questTypeId, questType -> {
             questTypeName.setText(questType.getName());
-
         });
 
         UserQuestsService.getInstance().getByUserAndQuestType(AuthContext.getId(), questTypeId, userQuests -> {
-            Log.d("TEST", String.valueOf(userQuests.size()));
             adapter = new QuestAdapter(this, userQuests);
             recyclerView.setAdapter(adapter);
+
+            setAbandonBtnVisiblity(userQuests);
         });
 
         abandon.setOnClickListener(v -> {
@@ -94,5 +95,24 @@ public class QuestListActivity extends AppCompatActivity {
             AlertDialog alert = builder.create();
             alert.show();
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        UserQuestsService.getInstance().getByUserAndQuestType(AuthContext.getId(), questTypeId, userQuests -> {
+            adapter = new QuestAdapter(this, userQuests);
+            recyclerView.setAdapter(adapter);
+            setAbandonBtnVisiblity(userQuests);
+        });
+    }
+
+    private void setAbandonBtnVisiblity(Vector<UserQuest> userQuests) {
+        boolean isAllDone = true;
+        for (UserQuest uq: userQuests) {
+            if (!uq.isDone()) isAllDone = false;
+        }
+        if (isAllDone) abandon.setVisibility(View.INVISIBLE);
     }
 }

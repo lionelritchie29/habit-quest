@@ -1,5 +1,6 @@
 package com.mobile_prog.habit_quest.adapters;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -56,7 +57,7 @@ public class QuestTypeAdapter extends RecyclerView.Adapter<QuestTypeAdapter.Ques
     }
 
     @Override
-    public void onBindViewHolder(@NonNull QuestTypeViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull QuestTypeViewHolder holder, @SuppressLint("RecyclerView") int position) {
         QuestType currentQuestType = questTypes.get(position);
         holder.questTypeName.setText(currentQuestType.getName());
         holder.questTypeDescription.setText(currentQuestType.getDescription());
@@ -85,8 +86,8 @@ public class QuestTypeAdapter extends RecyclerView.Adapter<QuestTypeAdapter.Ques
                                     UserQuestsService.getInstance().addForUserQuestType(userQuestTypeId, questTypeId, __ -> {
                                         holder.btnDoQuest.setEnabled(true);
                                         Toast.makeText(v.getContext(), "Sucesfully added this quest to your quest list!", Toast.LENGTH_SHORT).show();
-                                        Intent toHome = new Intent(v.getContext(), MainActivity.class);
-                                        context.startActivity(toHome);
+//                                        Intent toHome = new Intent(v.getContext(), MainActivity.class);
+//                                        context.startActivity(toHome);
 
                                         Activity act = (Activity) v.getContext();
                                         act.finish();

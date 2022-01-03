@@ -8,6 +8,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.mobile_prog.habit_quest.contexts.AuthContext;
 import com.mobile_prog.habit_quest.interfaces.Callable;
 import com.mobile_prog.habit_quest.models.QuestType;
+import com.mobile_prog.habit_quest.models.UserQuest;
 import com.mobile_prog.habit_quest.models.UserQuestType;
 
 import java.util.HashMap;
@@ -141,5 +142,26 @@ public class UserQuestTypesService extends BaseService{
                 callback.call(null);
             }
         });
+    }
+
+    public void checkIfShouldMarkDone(String userQuestTypeId, Callable<Boolean> callback) {
+        UserQuestsService.getInstance().getByUserQuestTypeId(userQuestTypeId, userQuests -> {
+            boolean isAllDone = true;
+            for(UserQuest uq: userQuests) {
+                if (!uq.isDone()) isAllDone = false;
+            }
+
+            if (isAllDone) {
+                db.collection(COLLECTION_NAME).document(userQuestTypeId).update("is_done", true)
+                        .addOnSuccessListener(__ -> callback.call(true))
+                        .addOnFailureListener(e -> {
+                            Log.d(TAG, "Failed when marking the quest type as done");
+                            callback.call(false);
+                        });
+            } else {
+                callback.call(true);
+            }
+        });
+
     }
 }

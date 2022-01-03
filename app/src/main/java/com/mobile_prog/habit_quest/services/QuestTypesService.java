@@ -79,25 +79,28 @@ public class QuestTypesService extends BaseService{
                 callback.call(questTypes);
             }
 
+            Vector<UserQuestType> filteredUserQuestType = new Vector<>();
             for (UserQuestType uqt: userQuestTypes) {
-                if (!uqt.isDone()) {
-                    db.collection(COLLECTION_NAME).whereEqualTo("__name__", uqt.getQuestTypeId()).get().addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                QuestType qt = document.toObject(QuestType.class);
-                                qt.setId(document.getId());
-                                questTypes.add(qt);
-                            }
-                        } else {
-                            Log.d(TAG, "Failed when getting quest type documents");
-                        }
+                if (!uqt.isDone()) filteredUserQuestType.add(uqt);
+            }
 
-                        counters.set(0, counters.get(0) + 1);
-                        if (counters.get(0) == userQuestTypes.size()) {
-                            callback.call(questTypes);
+            for (UserQuestType uqt: filteredUserQuestType) {
+                db.collection(COLLECTION_NAME).whereEqualTo("__name__", uqt.getQuestTypeId()).get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            QuestType qt = document.toObject(QuestType.class);
+                            qt.setId(document.getId());
+                            questTypes.add(qt);
                         }
-                    });
-                }
+                    } else {
+                        Log.d(TAG, "Failed when getting quest type documents");
+                    }
+
+                    counters.set(0, counters.get(0) + 1);
+                    if (counters.get(0) == filteredUserQuestType.size()) {
+                        callback.call(questTypes);
+                    }
+                });
             }
         });
     }
@@ -112,25 +115,28 @@ public class QuestTypesService extends BaseService{
                 callback.call(questTypes);
             }
 
+            Vector<UserQuestType> filteredUserQuestType = new Vector<>();
             for (UserQuestType uqt: userQuestTypes) {
-                if (uqt.isDone()) {
-                    db.collection(COLLECTION_NAME).whereEqualTo("__name__", uqt.getQuestTypeId()).get().addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                QuestType qt = document.toObject(QuestType.class);
-                                qt.setId(document.getId());
-                                questTypes.add(qt);
-                            }
-                        } else {
-                            Log.d(TAG, "Failed when getting quest type documents");
-                        }
+                if (uqt.isDone()) filteredUserQuestType.add(uqt);
+            }
 
-                        counters.set(0, counters.get(0) + 1);
-                        if (counters.get(0) == userQuestTypes.size()) {
-                            callback.call(questTypes);
+            for (UserQuestType uqt: filteredUserQuestType) {
+                db.collection(COLLECTION_NAME).whereEqualTo("__name__", uqt.getQuestTypeId()).get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            QuestType qt = document.toObject(QuestType.class);
+                            qt.setId(document.getId());
+                            questTypes.add(qt);
                         }
-                    });
-                }
+                    } else {
+                        Log.d(TAG, "Failed when getting quest type documents");
+                    }
+
+                    counters.set(0, counters.get(0) + 1);
+                    if (counters.get(0) == filteredUserQuestType.size()) {
+                        callback.call(questTypes);
+                    }
+                });
             }
         });
     }

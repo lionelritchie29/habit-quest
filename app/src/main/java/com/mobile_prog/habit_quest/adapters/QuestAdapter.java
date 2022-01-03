@@ -47,6 +47,10 @@ public class QuestAdapter extends RecyclerView.Adapter<QuestAdapter.QuestViewHol
         holder.questIsDone.setText(currentQuest.isDone() ? "Done" : "Not Done");
         holder.btnDoNow.setTag(position);
 
+        if (currentQuest.isDone()) {
+            holder.btnDoNow.setVisibility(View.INVISIBLE);
+        }
+
         QuestsService.getInstance().getById(currentQuest.getQuestId(), quest -> {
             holder.questName.setText(quest.getName());
             holder.setQuest(quest);
@@ -57,6 +61,7 @@ public class QuestAdapter extends RecyclerView.Adapter<QuestAdapter.QuestViewHol
             public void onClick(View v) {
                 Intent intent = new Intent(context, QuestDetailActivity.class);
                 intent.putExtra("quest", holder.quest);
+                intent.putExtra("user_quest_type", currentQuest);
                 context.startActivity(intent);
             }
         });
