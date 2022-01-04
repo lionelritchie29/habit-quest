@@ -4,13 +4,13 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!-- check wifi state -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <application android:name=".AdSampleApplication" android:allowBackup="true" android:icon="@mipmap/ic_launcher" android:label="@string/app_name" android:roundIcon="@mipmap/ic_launcher_round" android:supportsRtl="true" android:usesCleartextTraffic="true" android:theme="@style/Theme.HabitQuest">
-        <activity android:name=".views.QuestDetailActivity" android:exported="false" />
+    <application android:name="com.habit_quest.huawei.AdSampleApplication" android:allowBackup="true" android:icon="@mipmap/ic_launcher" android:label="@string/app_name" android:roundIcon="@mipmap/ic_launcher_round" android:supportsRtl="true" android:usesCleartextTraffic="true" android:theme="@style/Theme.HabitQuest">
+        <activity android:name="com.habit_quest.huawei.views.QuestDetailActivity" android:exported="false" />
         <meta-data android:name="com.huawei.hms.client.channel.androidMarket" android:value="false" />
-        <activity android:name=".views.QuestListActivity" android:exported="false" />
-        <activity android:name=".views.QuestTypeListActivity" android:exported="false" />
-        <activity android:name=".views.MainActivity" android:exported="false" />
-        <activity android:name=".views.LoginActivity" android:exported="true">
+        <activity android:name="com.habit_quest.huawei.views.QuestListActivity" android:exported="false" />
+        <activity android:name="com.habit_quest.huawei.views.QuestTypeListActivity" android:exported="false" />
+        <activity android:name="com.habit_quest.huawei.views.MainActivity" android:exported="false" />
+        <activity android:name="com.habit_quest.huawei.views.LoginActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

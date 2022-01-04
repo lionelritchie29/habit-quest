@@ -1,21 +1,17 @@
-package com.mobile_prog.habit_quest.services;
+package com.habit_quest.huawei.services;
 
 import android.util.Log;
 
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.WriteBatch;
-import com.mobile_prog.habit_quest.interfaces.Callable;
-import com.mobile_prog.habit_quest.models.Quest;
-import com.mobile_prog.habit_quest.models.UserQuest;
-import com.mobile_prog.habit_quest.models.UserQuestType;
+import com.habit_quest.huawei.interfaces.Callable;
+import com.habit_quest.huawei.models.Quest;
+import com.habit_quest.huawei.models.UserQuest;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
-
-import javax.security.auth.callback.Callback;
 
 public class UserQuestsService extends BaseService{
     private static UserQuestsService instance = null;

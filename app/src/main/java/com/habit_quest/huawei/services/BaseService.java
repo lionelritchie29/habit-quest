@@ -1,4 +1,4 @@
-package com.mobile_prog.habit_quest.services;
+package com.habit_quest.huawei.services;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 

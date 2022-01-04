@@ -1,4 +1,4 @@
-package com.mobile_prog.habit_quest.models;
+package com.habit_quest.huawei.models;
 
 import java.io.Serializable;
 

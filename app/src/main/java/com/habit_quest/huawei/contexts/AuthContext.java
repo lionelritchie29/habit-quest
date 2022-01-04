@@ -1,9 +1,6 @@
-package com.mobile_prog.habit_quest.contexts;
+package com.habit_quest.huawei.contexts;
 
-import android.net.Uri;
-
-import com.huawei.hms.support.account.result.AuthAccount;
-import com.mobile_prog.habit_quest.models.User;
+import com.habit_quest.huawei.models.User;
 
 public class AuthContext {
     private static User current = null;

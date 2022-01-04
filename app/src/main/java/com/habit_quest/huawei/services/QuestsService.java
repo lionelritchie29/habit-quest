@@ -1,24 +1,12 @@
-package com.mobile_prog.habit_quest.services;
+package com.habit_quest.huawei.services;
 
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.WriteBatch;
-import com.mobile_prog.habit_quest.interfaces.Callable;
-import com.mobile_prog.habit_quest.models.Quest;
-import com.mobile_prog.habit_quest.models.QuestType;
-import com.mobile_prog.habit_quest.models.UserQuest;
-import com.mobile_prog.habit_quest.models.UserQuestType;
+import com.habit_quest.huawei.interfaces.Callable;
+import com.habit_quest.huawei.models.Quest;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Vector;
 
 public class QuestsService extends BaseService{

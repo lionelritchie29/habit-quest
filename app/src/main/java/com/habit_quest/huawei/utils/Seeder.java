@@ -1,17 +1,16 @@
-package com.mobile_prog.habit_quest.utils;
+package com.habit_quest.huawei.utils;
 
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.WriteBatch;
-import com.mobile_prog.habit_quest.models.Quest;
-import com.mobile_prog.habit_quest.models.QuestType;
-import com.mobile_prog.habit_quest.models.User;
-import com.mobile_prog.habit_quest.models.UserQuest;
-import com.mobile_prog.habit_quest.models.UserQuestType;
-import com.mobile_prog.habit_quest.services.QuestTypesService;
-import com.mobile_prog.habit_quest.services.QuestsService;
-import com.mobile_prog.habit_quest.services.UserQuestTypesService;
-import com.mobile_prog.habit_quest.services.UsersService;
+import com.habit_quest.huawei.models.Quest;
+import com.habit_quest.huawei.models.QuestType;
+import com.habit_quest.huawei.models.User;
+import com.habit_quest.huawei.models.UserQuestType;
+import com.habit_quest.huawei.services.QuestTypesService;
+import com.habit_quest.huawei.services.QuestsService;
+import com.habit_quest.huawei.services.UserQuestTypesService;
+import com.habit_quest.huawei.services.UsersService;
 
 import java.util.ArrayList;
 import java.util.HashMap;

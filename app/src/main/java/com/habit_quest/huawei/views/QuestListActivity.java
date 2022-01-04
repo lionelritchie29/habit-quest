@@ -1,4 +1,4 @@
-package com.mobile_prog.habit_quest.views;
+package com.habit_quest.huawei.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -6,11 +6,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Debug;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -20,16 +17,12 @@ import com.mobile_prog.habit_quest.R;
 
 import java.util.Vector;
 
-import com.mobile_prog.habit_quest.adapters.QuestAdapter;
-import com.mobile_prog.habit_quest.contexts.AuthContext;
-import com.mobile_prog.habit_quest.models.Quest;
-import com.mobile_prog.habit_quest.models.QuestType;
-import com.mobile_prog.habit_quest.models.User;
-import com.mobile_prog.habit_quest.models.UserQuest;
-import com.mobile_prog.habit_quest.models.UserQuestType;
-import com.mobile_prog.habit_quest.services.QuestTypesService;
-import com.mobile_prog.habit_quest.services.UserQuestTypesService;
-import com.mobile_prog.habit_quest.services.UserQuestsService;
+import com.habit_quest.huawei.adapters.QuestAdapter;
+import com.habit_quest.huawei.contexts.AuthContext;
+import com.habit_quest.huawei.models.UserQuest;
+import com.habit_quest.huawei.services.QuestTypesService;
+import com.habit_quest.huawei.services.UserQuestTypesService;
+import com.habit_quest.huawei.services.UserQuestsService;
 
 public class QuestListActivity extends AppCompatActivity {
 

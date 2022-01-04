@@ -1,4 +1,4 @@
-package com.mobile_prog.habit_quest.views;
+package com.habit_quest.huawei.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,15 +16,10 @@ import com.huawei.hms.ads.AdParam;
 import com.huawei.hms.ads.HwAds;
 import com.huawei.hms.ads.banner.BannerView;
 import com.mobile_prog.habit_quest.R;
-import com.mobile_prog.habit_quest.adapters.QuestTypeAdapter;
-import com.mobile_prog.habit_quest.contexts.AuthContext;
-import com.mobile_prog.habit_quest.models.Quest;
-import com.mobile_prog.habit_quest.models.QuestType;
-import com.mobile_prog.habit_quest.services.QuestTypesService;
-import com.mobile_prog.habit_quest.services.UsersService;
-import com.mobile_prog.habit_quest.utils.Seeder;
-
-import java.util.Vector;
+import com.habit_quest.huawei.adapters.QuestTypeAdapter;
+import com.habit_quest.huawei.contexts.AuthContext;
+import com.habit_quest.huawei.services.QuestTypesService;
+import com.habit_quest.huawei.services.UsersService;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 

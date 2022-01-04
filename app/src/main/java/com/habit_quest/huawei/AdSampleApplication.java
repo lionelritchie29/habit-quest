@@ -1,4 +1,4 @@
-package com.mobile_prog.habit_quest;
+package com.habit_quest.huawei;
 
 import android.app.Application;
 
