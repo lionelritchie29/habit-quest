@@ -1,4 +1,4 @@
-package com.habit_quest.huawei.views;
+package com.mobile_prog.habit_quest.views;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,8 +19,8 @@ import com.huawei.hms.support.account.result.AuthAccount;
 import com.huawei.hms.support.account.service.AccountAuthService;
 import com.huawei.hms.support.hwid.ui.HuaweiIdAuthButton;
 import com.mobile_prog.habit_quest.R;
-import com.habit_quest.huawei.contexts.AuthContext;
-import com.habit_quest.huawei.services.UsersService;
+import com.mobile_prog.habit_quest.contexts.AuthContext;
+import com.mobile_prog.habit_quest.services.UsersService;
 
 public class LoginActivity extends AppCompatActivity {
 

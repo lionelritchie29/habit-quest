@@ -1,4 +1,4 @@
-package com.habit_quest.huawei.views;
+package com.mobile_prog.habit_quest.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,12 +8,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mobile_prog.habit_quest.R;
-import com.habit_quest.huawei.contexts.AuthContext;
-import com.habit_quest.huawei.models.Quest;
-import com.habit_quest.huawei.models.UserQuest;
-import com.habit_quest.huawei.services.UserQuestTypesService;
-import com.habit_quest.huawei.services.UserQuestsService;
-import com.habit_quest.huawei.services.UsersService;
+import com.mobile_prog.habit_quest.contexts.AuthContext;
+import com.mobile_prog.habit_quest.models.Quest;
+import com.mobile_prog.habit_quest.models.UserQuest;
+import com.mobile_prog.habit_quest.services.UserQuestTypesService;
+import com.mobile_prog.habit_quest.services.UserQuestsService;
+import com.mobile_prog.habit_quest.services.UsersService;
 
 public class QuestDetailActivity extends AppCompatActivity {
 

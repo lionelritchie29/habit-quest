@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.habit_quest.huawei.views.QuestDetailActivity">
+    tools:context=".views.QuestDetailActivity">
 
     <LinearLayout
         android:id="@+id/linear_questdetail_header"

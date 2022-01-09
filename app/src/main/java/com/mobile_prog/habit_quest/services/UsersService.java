@@ -1,4 +1,4 @@
-package com.habit_quest.huawei.services;
+package com.mobile_prog.habit_quest.services;
 
 import android.util.Log;
 
@@ -6,8 +6,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.huawei.hms.support.account.result.AuthAccount;
-import com.habit_quest.huawei.interfaces.Callable;
-import com.habit_quest.huawei.models.User;
+import com.mobile_prog.habit_quest.interfaces.Callable;
+import com.mobile_prog.habit_quest.models.User;
 import java.util.Vector;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicReference;

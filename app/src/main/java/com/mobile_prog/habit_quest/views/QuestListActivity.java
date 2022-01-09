@@ -1,4 +1,4 @@
-package com.habit_quest.huawei.views;
+package com.mobile_prog.habit_quest.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,12 +17,12 @@ import com.mobile_prog.habit_quest.R;
 
 import java.util.Vector;
 
-import com.habit_quest.huawei.adapters.QuestAdapter;
-import com.habit_quest.huawei.contexts.AuthContext;
-import com.habit_quest.huawei.models.UserQuest;
-import com.habit_quest.huawei.services.QuestTypesService;
-import com.habit_quest.huawei.services.UserQuestTypesService;
-import com.habit_quest.huawei.services.UserQuestsService;
+import com.mobile_prog.habit_quest.adapters.QuestAdapter;
+import com.mobile_prog.habit_quest.contexts.AuthContext;
+import com.mobile_prog.habit_quest.models.UserQuest;
+import com.mobile_prog.habit_quest.services.QuestTypesService;
+import com.mobile_prog.habit_quest.services.UserQuestTypesService;
+import com.mobile_prog.habit_quest.services.UserQuestsService;
 
 public class QuestListActivity extends AppCompatActivity {
 

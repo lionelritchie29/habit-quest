@@ -1,4 +1,4 @@
-package com.habit_quest.huawei.adapters;
+package com.mobile_prog.habit_quest.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,13 +12,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mobile_prog.habit_quest.R;
-import com.habit_quest.huawei.models.Quest;
-import com.habit_quest.huawei.services.QuestsService;
-import com.habit_quest.huawei.views.QuestDetailActivity;
+import com.mobile_prog.habit_quest.models.Quest;
+import com.mobile_prog.habit_quest.services.QuestsService;
+import com.mobile_prog.habit_quest.views.QuestDetailActivity;
 
 import java.util.Vector;
 
-import com.habit_quest.huawei.models.UserQuest;
+import com.mobile_prog.habit_quest.models.UserQuest;
 
 public class QuestAdapter extends RecyclerView.Adapter<QuestAdapter.QuestViewHolder> {
 

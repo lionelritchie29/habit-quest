@@ -1,13 +1,13 @@
-package com.habit_quest.huawei.services;
+package com.mobile_prog.habit_quest.services;
 
 import android.util.Log;
 
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.WriteBatch;
-import com.habit_quest.huawei.interfaces.Callable;
-import com.habit_quest.huawei.models.Quest;
-import com.habit_quest.huawei.models.UserQuest;
+import com.mobile_prog.habit_quest.interfaces.Callable;
+import com.mobile_prog.habit_quest.models.Quest;
+import com.mobile_prog.habit_quest.models.UserQuest;
 
 import java.util.HashMap;
 import java.util.Map;

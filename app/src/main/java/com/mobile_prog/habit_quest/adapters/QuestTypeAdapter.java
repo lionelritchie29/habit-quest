@@ -1,4 +1,4 @@
-package com.habit_quest.huawei.adapters;
+package com.mobile_prog.habit_quest.adapters;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -16,15 +16,15 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.habit_quest.huawei.contexts.AuthContext;
-import com.habit_quest.huawei.services.UserQuestTypesService;
-import com.habit_quest.huawei.services.UserQuestsService;
-import com.habit_quest.huawei.views.QuestListActivity;
+import com.mobile_prog.habit_quest.contexts.AuthContext;
+import com.mobile_prog.habit_quest.services.UserQuestTypesService;
+import com.mobile_prog.habit_quest.services.UserQuestsService;
+import com.mobile_prog.habit_quest.views.QuestListActivity;
 import com.mobile_prog.habit_quest.R;
 
 import java.util.Vector;
 
-import com.habit_quest.huawei.models.QuestType;
+import com.mobile_prog.habit_quest.models.QuestType;
 
 public class QuestTypeAdapter extends RecyclerView.Adapter<QuestTypeAdapter.QuestTypeViewHolder> {
 

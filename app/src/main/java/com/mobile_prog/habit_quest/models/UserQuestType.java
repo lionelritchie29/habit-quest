@@ -1,4 +1,4 @@
-package com.habit_quest.huawei.models;
+package com.mobile_prog.habit_quest.models;
 
 public class UserQuestType {
     private String id;

@@ -1,6 +1,6 @@
-package com.habit_quest.huawei.contexts;
+package com.mobile_prog.habit_quest.contexts;
 
-import com.habit_quest.huawei.models.User;
+import com.mobile_prog.habit_quest.models.User;
 
 public class AuthContext {
     private static User current = null;

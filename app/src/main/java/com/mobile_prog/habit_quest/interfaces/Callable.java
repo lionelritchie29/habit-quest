@@ -1,4 +1,4 @@
-package com.habit_quest.huawei.interfaces;
+package com.mobile_prog.habit_quest.interfaces;
 
 public interface Callable<T> {
     void call(T value);
